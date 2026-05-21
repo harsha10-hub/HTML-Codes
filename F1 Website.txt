@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>F1 2026 | Next-Gen Formula 1 Hub</title>
+  <!-- Google Fonts & Smooth Scroll -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Racing+Sans+One&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0a0c12;
+      font-family: 'Inter', sans-serif;
+      color: #eef2ff;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #141824;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #e10600;
+      border-radius: 10px;
+    }
+
+    /* containers */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* header / navbar */
+    .header {
+      background: rgba(2, 4, 12, 0.92);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(225, 6, 0, 0.4);
+      padding: 18px 0;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .logo {
+      font-family: 'Racing Sans One', cursive;
+      font-size: 1.9rem;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #ffffff, #e10600);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo span {
+      background: none;
+      -webkit-background-clip: unset;
+      color: #e10600;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: 600;
+    }
+    .nav-links a {
+      color: #f0f3fa;
+      text-decoration: none;
+      transition: 0.2s;
+      font-size: 1rem;
+    }
+    .nav-links a:hover {
+      color: #e10600;
+    }
+
+    /* hero section */
+    .hero {
+      background: radial-gradient(circle at 20% 30%, #0f121e, #03050b);
+      padding: 100px 0 90px;
+      border-bottom: 1px solid #222;
+    }
+    .hero-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+    }
+    .hero-text {
+      flex: 1;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #e10600;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 .year {
+      color: #e10600;
+    }
+    .hero-text p {
+      font-size: 1.2rem;
+      color: #b9c3e6;
+      max-width: 550px;
+      margin-bottom: 30px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.2s;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: #e10600;
+      color: white;
+      border: none;
+      box-shadow: 0 6px 14px rgba(225, 6, 0, 0.3);
+    }
+    .btn-primary:hover {
+      background: #b80500;
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      border: 1.5px solid #e10600;
+      color: #ffffff;
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: rgba(225, 6, 0, 0.15);
+      transform: translateY(-2px);
+    }
+    .hero-img {
+      flex: 1;
+      text-align: center;
+    }
+    .hero-img img {
+      max-width: 100%;
+      width: 480px;
+      filter: drop-shadow(0 20px 25px -8px rgba(0,0,0,0.6));
+      transition: transform 0.3s ease;
+    }
+    .hero-img img:hover {
+      transform: scale(1.01);
+    }
+
+    /* section titles */
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 60%;
+      height: 3px;
+      background: #e10600;
+      border-radius: 2px;
+    }
+
+    /* car gallery / driver cards grid */
+    .cars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 35px;
+      margin: 60px 0;
+    }
+    .car-card {
+      background: #11151f;
+      border-radius: 28px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+      border: 1px solid #252a36;
+      box-shadow: 0 15px 35px -12px rgba(0,0,0,0.5);
+    }
+    .car-card:hover {
+      transform: translateY(-8px);
+      border-color: #e1060066;
+      box-shadow: 0 25px 35px -12px rgba(225,6,0,0.2);
+    }
+    .car-img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(145deg, #1e1f2c, #0b0d14);
+    }
+    .card-content {
+      padding: 24px;
+    }
+    .team-name {
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .engine {
+      color: #e10600;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+    .car-specs {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #262d3a;
+      margin-top: 16px;
+      padding-top: 16px;
+      font-size: 0.85rem;
+    }
+    .spec-item {
+      text-align: center;
+    }
+
+    /* stats / long timeline */
+    .stats-section {
+      background: linear-gradient(110deg, #0b0e16 0%, #03050a 100%);
+      padding: 70px 0;
+      margin: 40px 0;
+      border-radius: 48px;
+    }
+    .stats-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      text-align: center;
+    }
+    .stat-card {
+      flex: 1;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      padding: 28px 12px;
+      border-radius: 32px;
+      border: 1px solid #242a36;
+    }
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #e10600;
+    }
+    .calendar-timeline {
+      margin: 60px 0 40px;
+    }
+    .race-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e2430;
+      padding: 20px 0;
+      transition: 0.1s;
+    }
+    .race-date {
+      min-width: 110px;
+      font-weight: 600;
+      color: #aaaecb;
+    }
+    .race-name {
+      font-weight: 700;
+      font-size: 1.2rem;
+      flex: 2;
+    }
+    .race-location {
+      color: #adadcc;
+    }
+
+    /* footer */
+    .footer {
+      background: #03050a;
+      padding: 50px 0 30px;
+      border-top: 1px solid #1f2532;
+      margin-top: 60px;
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+    .footer-logo {
+      font-family: 'Racing Sans One', cursive;
+      font-size: 1.8rem;
+    }
+    .footer-links {
+      display: flex;
+      gap: 40px;
+    }
+    .footer-links a {
+      color: #9fa6c2;
+      text-decoration: none;
+    }
+    .copyright {
+      margin-top: 45px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #5e6685;
+    }
+    @media (max-width: 780px) {
+      .container {
+        padding: 0 20px;
+      }
+      .hero-text h1 {
+        font-size: 2.4rem;
+      }
+      .nav {
+        flex-direction: column;
+      }
+      .stats-grid {
+        flex-direction: column;
+      }
+      .race-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <div class="logo">F1<span>2026</span> · NEXT GEN</div>
+      <div class="nav-links">
+        <a href="#cars">Cars & Teams</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#stats">Innovation</a>
+        <a href="#gallery">Gallery</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero section -->
+    <section class="hero">
+      <div class="container hero-content">
+        <div class="hero-text">
+          <div class="hero-badge">⚡ 2026 REGULATIONS · FULL REVEAL</div>
+          <h1>Welcome to the <span class="year">2026</span> Era<br>Faster. Lighter. Louder.</h1>
+          <p>New active aerodynamics, 50% sustainable fuels, and the most competitive grid in history. 24 races, 11 teams, one world champion.</p>
+          <div class="btn-group">
+            <a href="#cars" class="btn btn-primary">Explore cars ↓</a>
+            <a href="#calendar" class="btn btn-outline">2026 calendar</a>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img src="https://placehold.co/600x400/1a1e2a/white?text=F1+2026+Concept" alt="Concept F1 2026 Car" style="border-radius: 32px; background: linear-gradient(145deg,#191e2c,#0a0e18);">
+        </div>
+      </div>
+    </section>
+
+    <!-- Cars Gallery section (attached car images) -->
+    <div class="container" id="cars">
+      <h2 class="section-title" style="margin-top: 70px;">⚙️ 2026 challengers · next-gen machines</h2>
+      <div class="cars-grid">
+        <!-- Car 1: Ferrari -->
+        <div class="car-card">
+          <img class="car-img" src="https://placehold.co/600x400/e30c00/ffffff?text=Ferrari+HP+2026" alt="Ferrari 2026 F1 car">
+          <div class="card-content">
+            <div class="team-name">Scuderia Ferrari</div>
+            <div class="engine">Ferrari 066/12 V6 hybrid · 1000+ hp</div>
+            <p>New active rear wing & ground-effect tunnels. Leclerc & Hamilton aiming for glory.</p>
+            <div class="car-specs">
+              <div class="spec-item">⚡ 0-100: 2.1s</div>
+              <div class="spec-item">🔥 350 km/h</div>
+              <div class="spec-item">🌱 100% sustainable fuel</div>
+            </div>
+          </div>
+        </div>
+        <!-- Car 2: Red Bull -->
+        <div class="car-card">
+          <img class="car-img" src="https://placehold.co/600x400/1e3a8a/ffffff?text=Oracle+RedBull+Racing" alt="Red Bull 2026 F1 car">
+          <div class="card-content">
+            <div class="team-name">Oracle Red Bull Racing</div>
+            <div class="engine">Honda RBPT · ERS-K advanced</div>
+            <p>Aggressive aero philosophy and lightweight chassis. Verstappen targets 5th title.</p>
+            <div class="car-specs">
+              <div class="spec-item">⚡ 0-100: 2.0s</div>
+              <div class="spec-item">🔥 355 km/h</div>
+              <div class="spec-item">🌱 Synthetic blend</div>
+            </div>
+          </div>
+        </div>
+        <!-- Car 3: Mercedes -->
+        <div class="car-card">
+          <img class="car-img" src="https://placehold.co/600x400/00a19f/111111?text=Mercedes-AMG+PETRONAS" alt="Mercedes W17 2026">
+          <div class="card-content">
+            <div class="team-name">Mercedes-AMG</div>
+            <div class="engine">Mercedes M18 E Performance</div>
+            <p>Zero-pod evolution and push-rod suspension revolution. Russell & Antonelli unleashed.</p>
+            <div class="car-specs">
+              <div class="spec-item">⚡ 0-100: 2.1s</div>
+              <div class="spec-item">🔥 352 km/h</div>
+              <div class="spec-item">🌱 Advanced bio-fuel</div>
+            </div>
+          </div>
+        </div>
+        <!-- Car 4: McLaren -->
+        <div class="car-card">
+          <img class="car-img" src="https://placehold.co/600x400/ff8700/000000?text=McLaren+Future+2026" alt="McLaren 2026 concept">
+          <div class="card-content">
+            <div class="team-name">McLaren F1 Team</div>
+            <div class="engine">Mercedes-AMG · Next-Gen PU</div>
+            <p>Sleek papaya design, improved cooling & drag reduction system. Norris/Piastri fight.</p>
+            <div class="car-specs">
+              <div class="spec-item">⚡ 0-100: 2.15s</div>
+              <div class="spec-item">🔥 348 km/h</div>
+              <div class="spec-item">🌱 E-fuel ready</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional car image row (extra to feel rich) -->
+    <div class="container" id="gallery">
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 50px 0;">
+        <img src="https://placehold.co/400x250/1c2130/ffffff?text=Aston+Martin+2026" alt="Aston Martin F1" style="border-radius: 24px; width: 100%; max-width: 300px; object-fit: cover; border: 1px solid #2f3545;">
+        <img src="https://placehold.co/400x250/2c2830/ffffff?text=Alpine+2026+Concept" alt="Alpine F1" style="border-radius: 24px; width: 100%; max-width: 300px; object-fit: cover; border: 1px solid #2f3545;">
+        <img src="https://placehold.co/400x250/182631/ffffff?text=Williams+Mercedes+2026" alt="Williams F1" style="border-radius: 24px; width: 100%; max-width: 300px; object-fit: cover; border: 1px solid #2f3545;">
+        <img src="https://placehold.co/400x250/2A1E2C/ffffff?text=VCARB+RB+2026" alt="VCARB F1" style="border-radius: 24px; width: 100%; max-width: 300px; object-fit: cover; border: 1px solid #2f3545;">
+      </div>
+      <p class="section-title" style="font-size: 1.1rem; font-weight: 400; margin-top: 0;">🏎️ 2026 aero regulations: active front & rear wings, movable aero for straightline efficiency</p>
+    </div>
+
+    <!-- long statistics & innovation -->
+    <div class="container stats-section" id="stats">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number">24</div><div>GRAND PRIX</div><small>longest season yet</small></div>
+        <div class="stat-card"><div class="stat-number">11</div><div>TEAMS</div><small>incl. Andretti Cadillac</small></div>
+        <div class="stat-card"><div class="stat-number">50%</div><div>SUSTAINABLE FUEL</div><small>net-zero carbon by 2030</small></div>
+        <div class="stat-card"><div class="stat-number">1000+</div><div>HP POWER UNITS</div><small>hybrid + electrical boost</small></div>
+      </div>
+    </div>
+
+    <!-- Calendar: 2026 race schedule -->
+    <div class="container" id="calendar">
+      <h2 class="section-title">📅 2026 FIA Formula One Calendar</h2>
+      <div class="calendar-timeline">
+        <div class="race-item"><span class="race-date">Mar 01</span><span class="race-name">🇦🇺 Australian GP</span><span class="race-location">Melbourne, Albert Park</span></div>
+        <div class="race-item"><span class="race-date">Mar 15</span><span class="race-name">🇨🇳 Chinese GP</span><span class="race-location">Shanghai International Circuit</span></div>
+        <div class="race-item"><span class="race-date">Mar 29</span><span class="race-name">🇯🇵 Japanese GP</span><span class="race-location">Suzuka Circuit</span></div>
+        <div class="race-item"><span class="race-date">Apr 12</span><span class="race-name">🇧🇭 Bahrain GP</span><span class="race-location">Bahrain Int'l (Night race)</span></div>
+        <div class="race-item"><span class="race-date">Apr 26</span><span class="race-name">🇸🇦 Saudi Arabian GP</span><span class="race-location">Jeddah Corniche</span></div>
+        <div class="race-item"><span class="race-date">May 10</span><span class="race-name">🇺🇸 Miami GP</span><span class="race-location">Miami Int'l Autodrome</span></div>
+        <div class="race-item"><span class="race-date">May 24</span><span class="race-name">🇪🇸 Spanish GP</span><span class="race-location">Barcelona-Catalunya</span></div>
+        <div class="race-item"><span class="race-date">Jun 07</span><span class="race-name">🇲🇨 Monaco GP</span><span class="race-location">Circuit de Monaco</span></div>
+        <div class="race-item"><span class="race-date">Jun 21</span><span class="race-name">🇨🇦 Canadian GP</span><span class="race-location">Circuit Gilles Villeneuve</span></div>
+        <div class="race-item"><span class="race-date">Jul 05</span><span class="race-name">🇦🇹 Austrian GP</span><span class="race-location">Red Bull Ring</span></div>
+        <div class="race-item"><span class="race-date">Jul 19</span><span class="race-name">🇬🇧 British GP</span><span class="race-location">Silverstone Circuit</span></div>
+        <div class="race-item"><span class="race-date">Aug 02</span><span class="race-name">🇧🇪 Belgian GP</span><span class="race-location">Spa-Francorchamps</span></div>
+        <div class="race-item"><span class="race-date">Aug 23</span><span class="race-name">🇳🇱 Dutch GP</span><span class="race-location">Zandvoort</span></div>
+        <div class="race-item"><span class="race-date">Sep 06</span><span class="race-name">🇮🇹 Italian GP</span><span class="race-location">Monza</span></div>
+        <div class="race-item"><span class="race-date">Sep 20</span><span class="race-name">🇦🇿 Azerbaijan GP</span><span class="race-location">Baku City Circuit</span></div>
+        <div class="race-item"><span class="race-date">Oct 04</span><span class="race-name">🇸🇬 Singapore GP</span><span class="race-location">Marina Bay (Night)</span></div>
+        <div class="race-item"><span class="race-date">Oct 18</span><span class="race-name">🇺🇸 United States GP</span><span class="race-location">COTA, Austin</span></div>
+        <div class="race-item"><span class="race-date">Nov 01</span><span class="race-name">🇲🇽 Mexico City GP</span><span class="race-location">Autódromo Hnos. Rodríguez</span></div>
+        <div class="race-item"><span class="race-date">Nov 15</span><span class="race-name">🇧🇷 São Paulo GP</span><span class="race-location">Interlagos</span></div>
+        <div class="race-item"><span class="race-date">Nov 29</span><span class="race-name">🇶🇦 Qatar GP</span><span class="race-location">Lusail Circuit</span></div>
+        <div class="race-item"><span class="race-date">Dec 06</span><span class="race-name">🇦🇪 Abu Dhabi GP</span><span class="race-location">Yas Marina (Finale)</span></div>
+      </div>
+    </div>
+
+    <!-- Technical highlights + long professional description -->
+    <div class="container" style="margin: 60px auto;">
+      <div style="background: #0c0f18; border-radius: 44px; padding: 48px 32px; border: 1px solid #242b38;">
+        <h2 class="section-title" style="margin-bottom: 28px;">🏁 2026 Technical & Sporting Revolution</h2>
+        <div style="display: flex; flex-wrap: wrap; gap: 40px;">
+          <div style="flex: 1;">
+            <h3 style="color:#e10600; margin-bottom: 15px;">⚡ Active Aerodynamics</h3>
+            <p>The 2026 regulations introduce movable front and rear wings (two active modes: Z-mode for low drag, X-mode for high downforce). Drag reduced by over 15% compared to 2025, boosting straight-line speed beyond 350 km/h even at high-downforce tracks.</p>
+            <h3 style="color:#e10600; margin: 28px 0 10px;">🌍 Net Zero Carbon commitment</h3>
+            <p>100% advanced sustainable fuel across all power units, created from biowaste or synthetic sources. CO2 emissions per race weekend slashed by 60% compared to 2020 levels.</p>
+          </div>
+          <div style="flex: 1;">
+            <h3 style="color:#e10600; margin-bottom: 15px;">🏎️ Lighter & Safer Chassis</h3>
+            <p>Minimum weight reduced by 40kg – cars are nimbler and more spectacular. Updated safety structures with enhanced halo and Zylon side intrusion panels. New overtaking-friendly zones enabled by manual override electrical boost (350kW peak). </p>
+            <h3 style="color:#e10600; margin: 28px 0 10px;">🎯 2026 rookies & transfers</h3>
+            <p>Lewis Hamilton moves to Ferrari in blockbuster switch. Esteban Ocon joins Haas, Ollie Bearman makes full-time debut. Andretti Cadillac expands grid to 22 cars from 2026.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional car image strip just to reinforce visuals -->
+    <div class="container">
+      <div style="background: radial-gradient(circle, #131722, #080b12); border-radius: 32px; padding: 25px; margin: 30px 0; text-align: center;">
+        <h3 style="font-weight: 600; margin-bottom: 20px;">📸 2026 car liveries · design previews</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;">
+          <img src="https://placehold.co/140x90/e10600/ffffff?text=Ferrari+SF-26" style="border-radius: 16px; object-fit: cover;">
+          <img src="https://placehold.co/140x90/1e3a8a/ffffff?text=RedBull+RB22" style="border-radius: 16px;">
+          <img src="https://placehold.co/140x90/27ae60/ffffff?text=Mercedes+W17" style="border-radius: 16px;">
+          <img src="https://placehold.co/140x90/ff8c00/000000?text=McLaren+MCL42" style="border-radius: 16px;">
+          <img src="https://placehold.co/140x90/005c99/ffffff?text=Aston+AMR26" style="border-radius: 16px;">
+          <img src="https://placehold.co/140x90/a020f0/ffffff?text=Alpine+A626" style="border-radius: 16px;">
+        </div>
+        <p class="copyright" style="margin-top: 18px;">*Official team liveries to be revealed ahead of 2026 Winter Testing • Barcelona & Bahrain</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-logo">F1<span style="color:#e10600;">2026</span><span style="font-size: 1rem;"> · Next Generation Racing</span></div>
+        <div class="footer-links">
+          <a href="#">Teams</a>
+          <a href="#">Drivers</a>
+          <a href="#">Ticket info</a>
+          <a href="#">FIA 2026</a>
+        </div>
+      </div>
+      <div class="copyright">
+        © 2026 Formula One World Championship Limited — Fan concept website for educational & showcase purposes. All displayed car images & designs are rendered previews.
+        <br>Built for the ultimate F1 enthusiast — #F1 2026
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

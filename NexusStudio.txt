@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NEXUS STUDIO — Creative Digital Agency</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0d0d0d;
+      --paper: #f5f0e8;
+      --cream: #ede8dc;
+      --rust: #c94f2c;
+      --gold: #d4a83a;
+      --slate: #3a3a4a;
+      --muted: #8a8a7a;
+      --border: rgba(13,13,13,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Mono', monospace;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      width: 12px; height: 12px;
+      background: var(--rust);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+      mix-blend-mode: multiply;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--rust);
+      border-radius: 50%;
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.18s ease, width 0.2s, height 0.2s;
+      mix-blend-mode: multiply;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: rgba(245,240,232,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.1em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--rust); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--slate);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--rust); }
+    .nav-cta {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 0.6rem 1.4rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--rust); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 4rem 5rem;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(120px, 18vw, 280px);
+      color: rgba(201,79,44,0.06);
+      white-space: nowrap;
+      user-select: none;
+      letter-spacing: -0.02em;
+      animation: slowDrift 20s ease-in-out infinite alternate;
+    }
+    @keyframes slowDrift {
+      from { transform: translate(-50%,-50%) rotate(-1deg); }
+      to   { transform: translate(-48%,-52%) rotate(1deg); }
+    }
+    .hero-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: fadeUp 1s 0.2s both;
+    }
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 40px; height: 1px;
+      background: var(--rust);
+    }
+    .hero-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3.5rem, 7vw, 7rem);
+      line-height: 1.02;
+      max-width: 850px;
+      animation: fadeUp 1s 0.4s both;
+    }
+    .hero-headline em {
+      font-style: italic;
+      color: var(--rust);
+    }
+    .hero-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      max-width: 420px;
+      line-height: 1.8;
+      margin-top: 2rem;
+      animation: fadeUp 1s 0.6s both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      animation: fadeUp 1s 0.8s both;
+    }
+    .btn-primary {
+      background: var(--rust);
+      color: #fff;
+      padding: 1rem 2.4rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--ink); transform: translateY(-2px); }
+    .btn-outline {
+      border: 1.5px solid var(--ink);
+      color: var(--ink);
+      padding: 1rem 2.4rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { background: var(--ink); color: var(--paper); transform: translateY(-2px); }
+    .hero-stats {
+      display: flex;
+      gap: 4rem;
+      margin-top: 5rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 1s 1s both;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.8rem;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--rust); }
+    .stat-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-top: 0.3rem;
+    }
+    .hero-scroll-indicator {
+      position: absolute;
+      right: 4rem;
+      bottom: 5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: fadeUp 1s 1.2s both;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--rust), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%,100% { opacity: 0.4; transform: scaleY(1); }
+      50%      { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MARQUEE */
+    .marquee-strip {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+    .marquee-inner {
+      display: inline-flex;
+      gap: 3rem;
+      animation: marquee 22s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.14em;
+    }
+    .marquee-dot { color: var(--rust); margin: 0 0.5rem; }
+
+    /* SECTION STYLES */
+    section { padding: 7rem 4rem; }
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 30px; height: 1px;
+      background: var(--rust);
+    }
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.8rem);
+      line-height: 1.1;
+      max-width: 700px;
+    }
+    .section-title em { font-style: italic; color: var(--rust); }
+
+    /* ABOUT */
+    .about { border-bottom: 1px solid var(--border); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      margin-top: 4rem;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--slate);
+      margin-bottom: 1.4rem;
+    }
+    .about-text p strong { color: var(--ink); font-weight: 500; }
+    .about-image-area {
+      position: relative;
+    }
+    .about-card {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 3rem;
+      position: relative;
+    }
+    .about-card::before {
+      content: '"';
+      font-family: 'DM Serif Display', serif;
+      font-size: 8rem;
+      color: var(--rust);
+      position: absolute;
+      top: -1rem;
+      left: 2rem;
+      line-height: 1;
+      opacity: 0.4;
+    }
+    .about-card blockquote {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+    .about-card cite {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .about-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+    .badge {
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.9rem;
+      color: var(--slate);
+    }
+
+    /* SERVICES */
+    .services {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+    .services-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: end;
+      margin-bottom: 5rem;
+    }
+    .services-intro p {
+      font-size: 0.88rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border: 1px solid var(--border);
+    }
+    .service-card {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service-card:nth-child(3n) { border-right: none; }
+    .service-card:nth-last-child(-n+3) { border-bottom: none; }
+    .service-card:hover { background: var(--ink); }
+    .service-card:hover .service-num,
+    .service-card:hover .service-name,
+    .service-card:hover .service-desc { color: var(--paper); }
+    .service-card:hover .service-name { color: var(--gold); }
+    .service-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: var(--rust);
+      margin-bottom: 1.5rem;
+      transition: color 0.3s;
+    }
+    .service-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      transition: color 0.3s;
+    }
+    .service-desc {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: var(--muted);
+      transition: color 0.3s;
+    }
+    .service-arrow {
+      margin-top: 2rem;
+      font-size: 1.2rem;
+      color: var(--rust);
+      transition: transform 0.2s;
+    }
+    .service-card:hover .service-arrow { transform: translateX(6px); }
+
+    /* WORK / PORTFOLIO */
+    .work { border-bottom: 1px solid var(--border); }
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .work-link {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid var(--rust);
+      padding-bottom: 2px;
+    }
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+    .work-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--cream);
+      cursor: none;
+    }
+    .work-item:first-child { grid-column: span 2; aspect-ratio: 16/7; }
+    .work-item-inner {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: flex-end;
+      padding: 2.5rem;
+      position: relative;
+    }
+    .work-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .work-item:hover .work-bg { transform: scale(1.06); }
+    .work-bg-1 { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+    .work-bg-2 { background: linear-gradient(135deg, #2d1b00 0%, #5a3700 50%, #8b5e0f 100%); }
+    .work-bg-3 { background: linear-gradient(135deg, #1a0a0a 0%, #3d1515 50%, #6b2323 100%); }
+    .work-bg-4 { background: linear-gradient(135deg, #0a1a0a 0%, #153d15 50%, #1e5c1e 100%); }
+    .work-bg-5 { background: linear-gradient(135deg, #0a0a1a 0%, #1a1540 50%, #2d2060 100%); }
+    .work-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+      background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .work-info { position: relative; z-index: 1; }
+    .work-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .work-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .work-item:first-child .work-title { font-size: 2.4rem; }
+
+    /* PROCESS */
+    .process {
+      background: var(--ink);
+      color: var(--paper);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .process .section-label { color: var(--gold); }
+    .process .section-label::before { background: var(--gold); }
+    .process .section-title em { color: var(--gold); }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 5rem;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .process-step {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+    }
+    .process-step:last-child { border-right: none; }
+    .step-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      color: rgba(255,255,255,0.05);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .step-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .step-desc {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: rgba(245,240,232,0.5);
+    }
+    .step-connector {
+      position: absolute;
+      top: 3rem;
+      right: -1rem;
+      font-size: 1.2rem;
+      color: var(--rust);
+      z-index: 1;
+    }
+
+    /* TEAM */
+    .team { border-bottom: 1px solid var(--border); }
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .team-card {
+      position: relative;
+      overflow: hidden;
+    }
+    .team-photo {
+      aspect-ratio: 3/4;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.2rem;
+    }
+    .team-photo-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.5s ease;
+    }
+    .team-card:hover .team-photo-bg { transform: scale(1.06); }
+    .tp-1 { background: linear-gradient(160deg, #c94f2c22 0%, #c94f2c 100%); }
+    .tp-2 { background: linear-gradient(160deg, #d4a83a22 0%, #d4a83a 100%); }
+    .tp-3 { background: linear-gradient(160deg, #3a3a4a22 0%, #3a3a4a 100%); }
+    .tp-4 { background: linear-gradient(160deg, #0d0d0d22 0%, #0d0d0d 100%); }
+    .team-initials {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+    .team-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+    .team-role {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    /* CLIENTS */
+    .clients {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+    .clients-logos {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-top: 4rem;
+      border: 1px solid var(--border);
+    }
+    .client-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 2rem;
+      border-right: 1px solid var(--border);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      transition: color 0.2s, background 0.2s;
+    }
+    .client-logo:last-child { border-right: none; }
+    .client-logo:hover { color: var(--ink); background: var(--paper); }
+
+    /* TESTIMONIALS */
+    .testimonials { border-bottom: 1px solid var(--border); }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .testi-card {
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .testi-card:hover { border-color: var(--rust); transform: translateY(-4px); }
+    .testi-stars { color: var(--gold); font-size: 0.8rem; margin-bottom: 1.2rem; }
+    .testi-text {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .testi-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      color: #fff;
+    }
+    .av-1 { background: var(--rust); }
+    .av-2 { background: var(--slate); }
+    .av-3 { background: var(--gold); color: var(--ink); }
+    .testi-name { font-size: 0.8rem; font-weight: 500; }
+    .testi-company { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+
+    /* METRICS */
+    .metrics {
+      background: var(--rust);
+      color: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+    .metrics .section-label { color: rgba(255,255,255,0.6); }
+    .metrics .section-label::before { background: rgba(255,255,255,0.6); }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 4rem;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .metric-item {
+      padding: 3rem 2.5rem;
+      border-right: 1px solid rgba(255,255,255,0.2);
+      text-align: center;
+    }
+    .metric-item:last-child { border-right: none; }
+    .metric-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 4rem;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: #fff;
+    }
+    .metric-unit { font-size: 2rem; }
+    .metric-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-top: 0.6rem;
+    }
+
+    /* BLOG */
+    .blog {
+      background: var(--cream);
+      border-bottom: 1px solid var(--border);
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .blog-card {
+      background: var(--paper);
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .blog-card:hover { transform: translateY(-4px); }
+    .blog-thumb {
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-card:first-child .blog-thumb { aspect-ratio: 16/8; }
+    .bt-1 { background: linear-gradient(135deg, #1a1a2e, #e94560); }
+    .bt-2 { background: linear-gradient(135deg, #2d1b00, #d4a83a); }
+    .bt-3 { background: linear-gradient(135deg, #0a1628, #c94f2c); }
+    .blog-thumb-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.1;
+      background-image: repeating-linear-gradient(45deg, #fff 0px, #fff 1px, transparent 1px, transparent 14px);
+    }
+    .blog-content { padding: 1.8rem; }
+    .blog-meta {
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.6rem;
+    }
+    .blog-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.1rem;
+      line-height: 1.35;
+      margin-bottom: 0.8rem;
+    }
+    .blog-card:first-child .blog-title { font-size: 1.5rem; }
+    .blog-excerpt {
+      font-size: 0.78rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    /* CONTACT / CTA */
+    .cta {
+      background: var(--ink);
+      color: var(--paper);
+      text-align: center;
+      padding: 8rem 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .cta-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 1.5rem;
+    }
+    .cta-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 6vw, 6rem);
+      line-height: 1.05;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+    }
+    .cta-title em { font-style: italic; color: var(--gold); }
+    .cta-sub {
+      font-size: 0.88rem;
+      color: rgba(245,240,232,0.5);
+      max-width: 440px;
+      margin: 0 auto 3rem;
+      line-height: 1.8;
+    }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; }
+    .cta-email {
+      display: block;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: rgba(245,240,232,0.3);
+      margin-top: 2rem;
+      text-transform: uppercase;
+    }
+
+    /* CONTACT FORM SECTION */
+    .contact-form-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0;
+      border-bottom: 1px solid var(--border);
+      min-height: 600px;
+    }
+    .contact-info {
+      background: var(--rust);
+      color: #fff;
+      padding: 6rem 4rem;
+    }
+    .contact-info .section-label { color: rgba(255,255,255,0.6); }
+    .contact-info .section-label::before { background: rgba(255,255,255,0.6); }
+    .contact-info .section-title { color: #fff; max-width: 100%; }
+    .contact-info .section-title em { color: var(--ink); }
+    .contact-details {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .contact-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .contact-item-label {
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .contact-item-value {
+      font-size: 0.9rem;
+      color: #fff;
+    }
+    .contact-form-area {
+      padding: 6rem 4rem;
+      background: var(--paper);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .form-group label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      padding: 0.85rem 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--ink);
+      outline: none;
+      resize: none;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--rust); }
+    .form-group textarea { height: 120px; }
+
+    /* FOOTER */
+    footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 5rem 4rem 2rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand {}
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      color: var(--paper);
+      display: block;
+      margin-bottom: 1rem;
+    }
+    .footer-logo span { color: var(--rust); }
+    .footer-tagline {
+      font-size: 0.8rem;
+      line-height: 1.8;
+      color: rgba(245,240,232,0.4);
+      max-width: 280px;
+      margin-bottom: 2rem;
+    }
+    .footer-socials { display: flex; gap: 0.8rem; }
+    .social-btn {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem;
+      color: rgba(245,240,232,0.5);
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .social-btn:hover { background: var(--rust); color: #fff; border-color: var(--rust); }
+    .footer-col h4 {
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .footer-col ul a {
+      font-size: 0.82rem;
+      color: rgba(245,240,232,0.4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul a:hover { color: var(--paper); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      font-size: 0.7rem;
+      color: rgba(245,240,232,0.3);
+      letter-spacing: 0.06em;
+    }
+    .footer-bottom a { color: var(--rust); text-decoration: none; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">NEXUS<span>.</span>STUDIO</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#blog">Insights</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Start a Project</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-text">NEXUS</div>
+    <div class="hero-label">Creative Digital Agency — Since 2012</div>
+    <h1 class="hero-headline">
+      We craft brands that<br><em>move</em> the world.
+    </h1>
+    <p class="hero-sub">
+      Full-service creative studio specializing in brand identity, digital experiences, and strategic communication for companies that refuse to be ordinary.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-primary">View Our Work</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">12<span>+</span></div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+      <div>
+        <div class="stat-num">340<span>+</span></div>
+        <div class="stat-label">Projects Delivered</div>
+      </div>
+      <div>
+        <div class="stat-num">48</div>
+        <div class="stat-label">Industry Awards</div>
+      </div>
+      <div>
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Client Retention</div>
+      </div>
+    </div>
+    <div class="hero-scroll-indicator">
+      <div class="scroll-line"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-strip">
+    <div class="marquee-inner">
+      <span class="marquee-item">Brand Identity</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Web Design</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Motion Graphics</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">UX Strategy</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Digital Marketing</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Creative Direction</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Product Design</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Brand Identity</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Web Design</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Motion Graphics</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">UX Strategy</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Digital Marketing</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Creative Direction</span><span class="marquee-dot">✦</span>
+      <span class="marquee-item">Product Design</span><span class="marquee-dot">✦</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="section-label">Our Story</div>
+    <h2 class="section-title">Built on ideas that <em>refuse</em> to be ignored.</h2>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>Founded in 2012 by a group of restless creatives who believed that <strong>great design is a force multiplier</strong> — not a finishing touch — Nexus Studio has grown into one of the most respected independent agencies in the industry.</p>
+        <p>We partner with founders, CMOs, and product leaders at every stage of growth, from early-stage startups shaping their first identity to established enterprises navigating transformation. Our work sits at the intersection of strategy, craft, and technology.</p>
+        <p>We believe that a strong brand is the most durable competitive advantage a company can build. It's not just a logo or a color palette — it's the sum total of every interaction a customer has with your company, and we obsess over every single one of those moments.</p>
+        <div class="about-badges">
+          <span class="badge">Brand Strategy</span>
+          <span class="badge">Visual Identity</span>
+          <span class="badge">Digital Experience</span>
+          <span class="badge">Motion Design</span>
+          <span class="badge">Packaging</span>
+          <span class="badge">Copywriting</span>
+          <span class="badge">Content Strategy</span>
+        </div>
+      </div>
+      <div class="about-image-area">
+        <div class="about-card">
+          <blockquote>Design is not just what it looks like and feels like. Design is how it works — and why people choose it over everything else.</blockquote>
+          <cite>— Marcus Cole, Founding Creative Director</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="services-intro reveal">
+      <div>
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">End-to-end creative <em>capabilities.</em></h2>
+      </div>
+      <p>We operate as an extension of your team, bringing senior creative and strategic expertise to every engagement. No juniors on your account. Ever.</p>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-name">Brand Identity</div>
+        <p class="service-desc">Logo systems, visual language, color architecture, typography hierarchies, and comprehensive brand guidelines that travel across every medium.</p>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-name">Digital Design</div>
+        <p class="service-desc">Websites, apps, and digital experiences engineered for conversion. We blend aesthetics with behavioral psychology to create interfaces people love.</p>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-name">Creative Strategy</div>
+        <p class="service-desc">Market positioning, narrative architecture, messaging frameworks, and campaign strategy that give your creative work direction and purpose.</p>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <div class="service-name">Motion & Film</div>
+        <p class="service-desc">Brand films, animated explainers, social content, and motion identity systems that bring your brand's personality to life in three dimensions.</p>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <div class="service-name">Packaging Design</div>
+        <p class="service-desc">Retail packaging, structural design, unboxing experiences, and shelf presence strategies for consumer products brands.</p>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <div class="service-name">Growth Marketing</div>
+        <p class="service-desc">Performance creative, email marketing, paid social strategy, and full-funnel content programs aligned to your growth metrics.</p>
+        <div class="service-arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="work" id="work">
+    <div class="work-header reveal">
+      <div>
+        <div class="section-label">Selected Projects</div>
+        <h2 class="section-title">Work that <em>speaks</em> for itself.</h2>
+      </div>
+      <a href="#" class="work-link">View All Projects</a>
+    </div>
+    <div class="work-grid reveal">
+      <div class="work-item">
+        <div class="work-item-inner">
+          <div class="work-bg work-bg-1"></div>
+          <div class="work-pattern"></div>
+          <div class="work-info">
+            <div class="work-tag">Brand Identity · Web · 2024</div>
+            <div class="work-title">Ōhana Capital — Redefining institutional investment</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-item-inner">
+          <div class="work-bg work-bg-2"></div>
+          <div class="work-pattern"></div>
+          <div class="work-info">
+            <div class="work-tag">Packaging · Campaign · 2024</div>
+            <div class="work-title">Terroir Spirits<br>Product Launch</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-item-inner">
+          <div class="work-bg work-bg-3"></div>
+          <div class="work-pattern"></div>
+          <div class="work-info">
+            <div class="work-tag">Motion · Brand Film · 2023</div>
+            <div class="work-title">Helix Biotech<br>Brand Campaign</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-item">
+        <div class="work-item-inner">
+          <div class="work-bg work-bg-4"></div>
+          <div class="work-pattern"></div>
+          <div class="work-info">
+            <div class="work-tag">Digital Product · UX · 2023</div>
+            <div class="work-title">Verdant App<br>Design System</div>
+          </div>
+        </div>
+      </div>
+      <div class="work-item" style="grid-column: span 2;">
+        <div class="work-item-inner" style="aspect-ratio: unset; min-height: 300px;">
+          <div class="work-bg work-bg-5"></div>
+          <div class="work-pattern"></div>
+          <div class="work-info">
+            <div class="work-tag">Full Brand · Strategy · Digital · 2023</div>
+            <div class="work-title" style="font-size: 2rem;">Arcane Labs — Full Brand Build, Digital Platform & Campaign</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process">
+    <div class="reveal">
+      <div class="section-label">How We Work</div>
+      <h2 class="section-title">A rigorous process for <em>lasting</em> results.</h2>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="step-number">01</div>
+        <div class="step-title">Discover</div>
+        <p class="step-desc">Deep immersion in your business, market, competitors, and audience. We ask the uncomfortable questions until we understand exactly what needs to change.</p>
+        <div class="step-connector">→</div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">02</div>
+        <div class="step-title">Define</div>
+        <p class="step-desc">Strategic positioning, brand architecture, and creative brief. We align on what success looks like before a single design decision is made.</p>
+        <div class="step-connector">→</div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">03</div>
+        <div class="step-title">Design</div>
+        <p class="step-desc">Rapid ideation, rigorous refinement, and meticulous craft. We explore widely then converge on solutions that are both beautiful and strategically sound.</p>
+        <div class="step-connector">→</div>
+      </div>
+      <div class="process-step">
+        <div class="step-number">04</div>
+        <div class="step-title">Deploy</div>
+        <p class="step-desc">Implementation, QA, and launch support. We don't hand you a folder of files — we ensure your brand lands in the world exactly as intended.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="team" id="team">
+    <div class="reveal">
+      <div class="section-label">The People</div>
+      <h2 class="section-title">Minds behind the <em>magic.</em></h2>
+    </div>
+    <div class="team-grid reveal">
+      <div class="team-card">
+        <div class="team-photo"><div class="team-photo-bg tp-1"></div><div class="team-initials">MC</div></div>
+        <div class="team-name">Marcus Cole</div>
+        <div class="team-role">Founding Creative Director</div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><div class="team-photo-bg tp-2"></div><div class="team-initials">SR</div></div>
+        <div class="team-name">Sasha Reyes</div>
+        <div class="team-role">Head of Strategy</div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><div class="team-photo-bg tp-3"></div><div class="team-initials">JP</div></div>
+        <div class="team-name">James Park</div>
+        <div class="team-role">Lead Digital Designer</div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><div class="team-photo-bg tp-4"></div><div class="team-initials">LL</div></div>
+        <div class="team-name">Léa Laurent</div>
+        <div class="team-role">Motion Director</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="clients">
+    <div class="reveal">
+      <div class="section-label">Trusted By</div>
+      <h2 class="section-title">Companies that chose to <em>stand out.</em></h2>
+    </div>
+    <div class="clients-logos reveal">
+      <div class="client-logo">ARCHVEST</div>
+      <div class="client-logo">NOVABLOC</div>
+      <div class="client-logo">TERROIR</div>
+      <div class="client-logo">HELIX</div>
+      <div class="client-logo">VERDANT</div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <div class="reveal">
+      <div class="section-label">Client Voices</div>
+      <h2 class="section-title">What our clients <em>actually</em> say.</h2>
+    </div>
+    <div class="testi-grid reveal">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"Nexus fundamentally changed how we think about our brand. The strategic clarity they brought was worth ten times the investment in pure marketing efficiency alone."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av-1">KD</div>
+          <div>
+            <div class="testi-name">Kira Donovan</div>
+            <div class="testi-company">CEO, Archvest</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"They didn't just deliver a beautiful brand — they delivered a growth engine. Our conversion rates doubled in the six months after launch. I can't recommend them enough."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av-2">TW</div>
+          <div>
+            <div class="testi-name">Thomas Wren</div>
+            <div class="testi-company">CMO, Verdant</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-text">"The team at Nexus became a true creative partner. They pushed back when we were wrong, and that's exactly what we needed. The work reflects the best version of what Helix can be."</p>
+        <div class="testi-author">
+          <div class="testi-avatar av-3">RL</div>
+          <div>
+            <div class="testi-name">Rachel Lim</div>
+            <div class="testi-company">Co-Founder, Helix</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <section class="metrics">
+    <div class="reveal">
+      <div class="section-label">Impact by Numbers</div>
+      <h2 class="section-title" style="color:#fff;">Results we're <em>proud</em> of.</h2>
+    </div>
+    <div class="metrics-grid reveal">
+      <div class="metric-item">
+        <div class="metric-number">340<span class="metric-unit">+</span></div>
+        <div class="metric-label">Projects Delivered</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-number">2.4<span class="metric-unit">×</span></div>
+        <div class="metric-label">Avg. Client Revenue Growth</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-number">48</div>
+        <div class="metric-label">Industry Awards Won</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-number">98<span class="metric-unit">%</span></div>
+        <div class="metric-label">Client Retention Rate</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section class="blog" id="blog">
+    <div class="reveal">
+      <div class="section-label">Studio Insights</div>
+      <h2 class="section-title">Thinking out <em>loud.</em></h2>
+    </div>
+    <div class="blog-grid reveal">
+      <div class="blog-card">
+        <div class="blog-thumb"><div class="bt-1" style="position:absolute;inset:0;"></div><div class="blog-thumb-pattern"></div></div>
+        <div class="blog-content">
+          <div class="blog-meta">Strategy · May 2025</div>
+          <div class="blog-title">Why Most Rebrands Fail — And the Three Principles That Make Them Succeed</div>
+          <p class="blog-excerpt">Brand transformations are notoriously difficult. After 12 years and over 80 rebrand engagements, we've identified the patterns that separate genuine evolution from expensive noise.</p>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb"><div class="bt-2" style="position:absolute;inset:0;"></div><div class="blog-thumb-pattern"></div></div>
+        <div class="blog-content">
+          <div class="blog-meta">Design · April 2025</div>
+          <div class="blog-title">The Craft of Restraint: When Less Is the Boldest Move</div>
+          <p class="blog-excerpt">How silence, negative space, and saying less can communicate more than any maximalist approach.</p>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-thumb"><div class="bt-3" style="position:absolute;inset:0;"></div><div class="blog-thumb-pattern"></div></div>
+        <div class="blog-content">
+          <div class="blog-meta">Culture · March 2025</div>
+          <div class="blog-title">On Building an Agency That Stays Small on Purpose</div>
+          <p class="blog-excerpt">A defense of boutique studio culture in an age of roll-ups, holding companies, and growth at all costs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="cta-eyebrow">Ready to Begin?</div>
+    <h2 class="cta-title">Let's build something <em>extraordinary.</em></h2>
+    <p class="cta-sub">We take on a limited number of new engagements each quarter. If you're ready to transform your brand, let's talk.</p>
+    <div class="cta-buttons">
+      <a href="#contact" class="btn-primary" style="background:var(--rust);">Start a Project</a>
+      <a href="#" class="btn-outline" style="border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.7);">Download Credentials</a>
+    </div>
+    <span class="cta-email">hello@nexusstudio.co</span>
+  </section>
+
+  <!-- CONTACT FORM -->
+  <div class="contact-form-section" id="contact">
+    <div class="contact-info">
+      <div class="section-label">Get in Touch</div>
+      <h2 class="section-title">Start the <em>conversation.</em></h2>
+      <div class="contact-details">
+        <div class="contact-item">
+          <span class="contact-item-label">Email</span>
+          <span class="contact-item-value">hello@nexusstudio.co</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">New Business</span>
+          <span class="contact-item-value">projects@nexusstudio.co</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Location</span>
+          <span class="contact-item-value">New York · London · Berlin</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item-label">Working Hours</span>
+          <span class="contact-item-value">Mon–Fri, 9am – 6pm EST</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-area">
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Marcus" />
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Cole" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="you@company.com" />
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" placeholder="Your Company Name" />
+      </div>
+      <div class="form-group">
+        <label>Service of Interest</label>
+        <select>
+          <option>Brand Identity</option>
+          <option>Digital Design</option>
+          <option>Creative Strategy</option>
+          <option>Motion & Film</option>
+          <option>Packaging Design</option>
+          <option>Growth Marketing</option>
+          <option>Full Partnership</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell us about your project</label>
+        <textarea placeholder="Brief description of what you're looking to achieve..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%; text-align:center; border:none; cursor:none;">Send Message →</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">NEXUS<span>.</span>STUDIO</a>
+        <p class="footer-tagline">A creative studio for companies that believe design is the difference between leading and following.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn">Tw</a>
+          <a href="#" class="social-btn">Li</a>
+          <a href="#" class="social-btn">In</a>
+          <a href="#" class="social-btn">Dr</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Brand Identity</a></li>
+          <li><a href="#">Digital Design</a></li>
+          <li><a href="#">Creative Strategy</a></li>
+          <li><a href="#">Motion & Film</a></li>
+          <li><a href="#">Packaging</a></li>
+          <li><a href="#">Growth Marketing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Our Work</a></li>
+          <li><a href="#">The Team</a></li>
+          <li><a href="#">Insights</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">hello@nexusstudio.co</a></li>
+          <li><a href="#">New York Office</a></li>
+          <li><a href="#">London Office</a></li>
+          <li><a href="#">Berlin Office</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Nexus Studio. All rights reserved.</span>
+      <span>Designed with obsessive care. <a href="#">Privacy Policy</a> · <a href="#">Terms</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animateCursor() {
+      cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

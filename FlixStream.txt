@@ -1,0 +1,538 @@
+!DOCTYPE html
+html lang=en
+head
+    meta charset=UTF-8
+    meta name=viewport content=width=device-width, initial-scale=1.0, user-scalable=yes
+    titleFlixStream  Watch Movies & Showstitle
+    !-- Google Fonts + Font Awesome --
+    link href=httpsfonts.googleapis.comcss2family=Interopsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800;14..32,900&display=swap rel=stylesheet
+    link rel=stylesheet href=httpscdnjs.cloudflare.comajaxlibsfont-awesome6.0.0-beta3cssall.min.css
+    style
+         {
+            margin 0;
+            padding 0;
+            box-sizing border-box;
+        }
+
+        body {
+            font-family 'Inter', sans-serif;
+            background-color #0f0f0f;
+            color #ffffff;
+            overflow-x hidden;
+        }
+
+         Custom Scrollbar 
+        -webkit-scrollbar { width 6px; }
+        -webkit-scrollbar-track { background #1a1a1a; }
+        -webkit-scrollbar-thumb { background #e50914; border-radius 10px; }
+
+         Reusable 
+        .container {
+            max-width 1400px;
+            margin 0 auto;
+            padding 0 48px;
+        }
+
+         Buttons 
+        .btn-primary {
+            background #e50914;
+            border none;
+            padding 10px 24px;
+            border-radius 6px;
+            font-weight 600;
+            color white;
+            cursor pointer;
+            transition all 0.2s ease;
+            font-size 0.9rem;
+            display inline-flex;
+            align-items center;
+            gap 8px;
+        }
+        .btn-primaryhover {
+            background #f6121d;
+            transform scale(1.02);
+        }
+        .btn-outline {
+            background rgba(109, 109, 110, 0.4);
+            backdrop-filter blur(4px);
+            border none;
+            padding 8px 20px;
+            border-radius 6px;
+            font-weight 500;
+            color white;
+            cursor pointer;
+            transition 0.2s;
+        }
+        .btn-outlinehover {
+            background rgba(150, 150, 150, 0.5);
+        }
+
+         Navbar 
+        .navbar {
+            background linear-gradient(180deg, #0a0a0a 0%, rgba(0,0,0,0.8) 100%);
+            position sticky;
+            top 0;
+            z-index 100;
+            padding 18px 0;
+            backdrop-filter blur(8px);
+        }
+        .nav-flex {
+            display flex;
+            justify-content space-between;
+            align-items center;
+            flex-wrap wrap;
+        }
+        .logo {
+            font-size 1.9rem;
+            font-weight 900;
+            letter-spacing -0.5px;
+            background linear-gradient(135deg, #e50914, #b81d24);
+            -webkit-background-clip text;
+            background-clip text;
+            color transparent;
+        }
+        .nav-links {
+            display flex;
+            gap 2rem;
+            align-items center;
+        }
+        .nav-links a {
+            text-decoration none;
+            color #e5e5e5;
+            font-weight 500;
+            transition 0.2s;
+        }
+        .nav-links ahover { color #e50914; }
+        .avatar {
+            width 32px;
+            height 32px;
+            border-radius 6px;
+            background #e50914;
+            display flex;
+            align-items center;
+            justify-content center;
+            cursor pointer;
+        }
+
+         Hero Section 
+        .hero {
+            position relative;
+            height 85vh;
+            background linear-gradient(0deg, #0f0f0f 0%, transparent 80%), url('httpsimages.unsplash.comphoto-1489599849927-2ee91cede3baw=1600&auto=format');
+            background-size cover;
+            background-position center 20%;
+            display flex;
+            align-items center;
+        }
+        .hero-content {
+            max-width 600px;
+            margin-left 60px;
+            animation fadeUp 0.8s ease;
+        }
+        .hero-content h1 {
+            font-size 3.5rem;
+            font-weight 800;
+            margin-bottom 1rem;
+        }
+        .hero-buttons {
+            display flex;
+            gap 16px;
+            margin 24px 0 18px;
+        }
+        .hero-meta {
+            display flex;
+            gap 20px;
+            color #ccc;
+            font-size 0.9rem;
+        }
+
+        @keyframes fadeUp {
+            from { opacity 0; transform translateY(30px);}
+            to { opacity 1; transform translateY(0);}
+        }
+
+         Section styles 
+        .section {
+            margin 48px 0 32px;
+        }
+        .section-header {
+            display flex;
+            justify-content space-between;
+            align-items baseline;
+            margin-bottom 18px;
+            padding 0 8px;
+        }
+        .section-header h2 {
+            font-size 1.5rem;
+            font-weight 700;
+        }
+        .section-link {
+            color #b3b3b3;
+            font-size 0.85rem;
+            cursor pointer;
+            transition 0.2s;
+        }
+        .section-linkhover { color #e50914; }
+
+         Movie Row (horizontal scroll) 
+        .movies-row {
+            display flex;
+            gap 16px;
+            overflow-x auto;
+            scroll-behavior smooth;
+            padding 12px 8px 24px;
+            scrollbar-width thin;
+        }
+        .movies-row-webkit-scrollbar {
+            height 5px;
+        }
+        .movie-card {
+            min-width 200px;
+            width 200px;
+            border-radius 8px;
+            overflow hidden;
+            transition all 0.25s ease;
+            cursor pointer;
+            background #1a1a1a;
+            position relative;
+        }
+        .movie-cardhover {
+            transform scale(1.05);
+            box-shadow 0 10px 20px rgba(0,0,0,0.5);
+        }
+        .movie-poster {
+            height 280px;
+            background-size cover;
+            background-position center;
+            position relative;
+        }
+        .movie-rating {
+            position absolute;
+            bottom 8px;
+            right 8px;
+            background rgba(0,0,0,0.7);
+            padding 4px 8px;
+            border-radius 20px;
+            font-size 0.7rem;
+            font-weight 600;
+        }
+        .movie-info {
+            padding 12px;
+        }
+        .movie-title {
+            font-weight 700;
+            font-size 0.9rem;
+            white-space nowrap;
+            overflow hidden;
+            text-overflow ellipsis;
+        }
+        .movie-year {
+            font-size 0.7rem;
+            color #aaa;
+            margin-top 5px;
+        }
+
+         Modal for video player  details 
+        .modal-overlay {
+            position fixed;
+            top 0;
+            left 0;
+            width 100%;
+            height 100%;
+            background rgba(0,0,0,0.9);
+            backdrop-filter blur(12px);
+            z-index 1000;
+            display flex;
+            align-items center;
+            justify-content center;
+            visibility hidden;
+            opacity 0;
+            transition 0.2s;
+        }
+        .modal-overlay.active {
+            visibility visible;
+            opacity 1;
+        }
+        .modal-container {
+            background #141414;
+            max-width 900px;
+            width 90%;
+            border-radius 16px;
+            overflow hidden;
+            position relative;
+        }
+        .modal-video {
+            width 100%;
+            background #000;
+            height 380px;
+            display flex;
+            align-items center;
+            justify-content center;
+            background-size cover;
+            background-position center;
+        }
+        .modal-video iframe {
+            width 100%;
+            height 100%;
+            border none;
+        }
+        .modal-content {
+            padding 28px;
+        }
+        .close-modal {
+            position absolute;
+            top 16px;
+            right 20px;
+            font-size 28px;
+            cursor pointer;
+            color white;
+            z-index 10;
+        }
+        footer {
+            background #0a0a0a;
+            padding 40px 0;
+            margin-top 60px;
+            border-top 1px solid #222;
+            text-align center;
+            color #777;
+            font-size 0.8rem;
+        }
+
+        @media (max-width 768px) {
+            .container { padding 0 20px; }
+            .hero-content { margin-left 20px; }
+            .hero-content h1 { font-size 2.2rem; }
+            .movie-card { min-width 150px; width 150px; }
+            .movie-poster { height 220px; }
+        }
+    style
+head
+body
+
+!-- Modal for Trailer  Playback --
+div class=modal-overlay id=videoModal
+    div class=modal-container
+        i class=fas fa-times close-modal id=closeModalBtni
+        div class=modal-video id=modalVideoContainer
+            !-- YouTube embed will be injected --
+            div style=colorwhite; text-aligncenter;Loading trailer...div
+        div
+        div class=modal-content id=modalMovieDetails
+            h2 id=modalTitleMovie Titleh2
+            p id=modalDescDescription will appear here.p
+            button class=btn-primary id=watchNowBtn style=margin-top 16px;▶ Play Full Movie (Demo)button
+        div
+    div
+div
+
+!-- Navbar --
+nav class=navbar
+    div class=container nav-flex
+        div class=logoi class=fas fa-filmi FlixStreamdiv
+        div class=nav-links
+            a href=#Homea
+            a href=# id=trendingLinkTrendinga
+            a href=#TV Showsa
+            a href=#Moviesa
+            div class=avatari class=fas fa-useridiv
+        div
+    div
+nav
+
+!-- Hero Section --
+div class=hero id=heroSection
+    div class=hero-content
+        h1 id=heroTitleDark Knight Risesh1
+        div class=hero-meta
+            spani class=fas fa-star style=color#e50914;i 8.8span
+            span2024span
+            span2h 32minspan
+            spanActionspan
+        div
+        p id=heroDesc style=max-width 500px;Watch the most thrilling action saga of the year. Epic battles, legendary storytelling.p
+        div class=hero-buttons
+            button class=btn-primary id=heroPlayBtni class=fas fa-playi Play Nowbutton
+            button class=btn-outline id=heroMoreBtnMore Infobutton
+        div
+    div
+div
+
+div class=container
+    !-- Trending Section --
+    div class=section
+        div class=section-header
+            h2i class=fas fa-chart-linei Trending Nowh2
+            span class=section-link id=viewAllTrendingView All →span
+        div
+        div class=movies-row id=trendingRowdiv
+    div
+
+    !-- Continue Watching  Popular Movies --
+    div class=section
+        div class=section-header
+            h2i class=fas fa-firei Popular on FlixStreamh2
+            span class=section-linkTop 10span
+        div
+        div class=movies-row id=popularRowdiv
+    div
+
+    !-- Action Movies Row --
+    div class=section
+        div class=section-header
+            h2i class=fas fa-fist-raisedi Action Packedh2
+            span class=section-linkMore Actionspan
+        div
+        div class=movies-row id=actionRowdiv
+    div
+div
+
+footer
+    div class=container
+        pFlixStream — Unlimited movies, TV shows, and more. Watch anywhere. Cancel anytime.p
+        div style=margin 20px 0; display flex; justify-content center; gap 24px;
+            i class=fab fa-instagrami i class=fab fa-twitteri i class=fab fa-youtubei i class=fab fa-facebooki
+        div
+        p© 2025 FlixStream, Inc.  A premium streaming experiencep
+    div
+footer
+
+script
+     ----------------------------------------------
+     MOVIE DATABASE (with posters and trailer links)
+     ----------------------------------------------
+    const movieDatabase = [
+        { id 1, title The Batman, year 2022, genre Action, rating 8.1, duration 2h 56min, desc When the Riddler strikes Gotham, Batman must uncover corruption., poster httpsimages.unsplash.comphoto-1635805737707-575885ab0820w=500&auto=format, trailer httpswww.youtube.comembedmqqft2x_Aa4 },
+        { id 2, title John Wick 4, year 2023, genre Action, rating 8.7, duration 2h 49min, desc Legendary hitman takes on the High Table., poster httpsimages.unsplash.comphoto-1626814026160-2237a95fc5a0w=500&auto=format, trailer httpswww.youtube.comembedqEVUtrk8_B4 },
+        { id 3, title Interstellar, year 2014, genre Sci-Fi, rating 8.6, duration 2h 49min, desc A team of explorers travel through a wormhole., poster httpsimages.unsplash.comphoto-1534809027769-b00d750a6bacw=500&auto=format, trailer httpswww.youtube.comembedzSWdZVtXT7E },
+        { id 4, title Stranger Things, year 2022, genre Series, rating 8.7, duration 4 Seasons, desc Kids vs supernatural forces in Hawkins., poster httpsimages.unsplash.comphoto-1626814026160-2237a95fc5a0w=500&auto=format, trailer httpswww.youtube.comembedb9EkMc79ZSU },
+        { id 5, title Extraction 2, year 2023, genre Action, rating 7.9, duration 2h 03min, desc Tyler Rake returns for a risky mission., poster httpsimages.unsplash.comphoto-1581009146145-b5ef050c2e1ew=500&auto=format, trailer httpswww.youtube.comembedY274jZs5s7s },
+        { id 6, title Oppenheimer, year 2023, genre Drama, rating 8.8, duration 3h, desc The man who built the atomic bomb., poster httpsimages.unsplash.comphoto-1440404653325-ab127d49abc1w=500&auto=format, trailer httpswww.youtube.comembeduYPbbksJxIg },
+        { id 7, title Spider-Verse, year 2023, genre Animation, rating 8.9, duration 2h 20min, desc Miles Morales returns in groundbreaking animation., poster httpsimages.unsplash.comphoto-1635805737707-575885ab0820w=500&auto=format, trailer httpswww.youtube.comembedshW9i6k8cB0 },
+        { id 8, title Money Heist, year 2021, genre Thriller, rating 8.2, duration 5 Seasons, desc Professor and his team pull off heists., poster httpsimages.unsplash.comphoto-1594909122845-11baa439b7bfw=500&auto=format, trailer httpswww.youtube.comembedpO7j9Gp_XpQ },
+        { id 9, title The Witcher, year 2023, genre Fantasy, rating 8.0, duration 3 Seasons, desc Geralt of Rivia, a mutated monster hunter., poster httpsimages.unsplash.comphoto-1626814026160-2237a95fc5a0w=500&auto=format, trailer httpswww.youtube.comembedndl1W4ltcmg },
+        { id 10, title Glass Onion, year 2022, genre Mystery, rating 7.8, duration 2h 19min, desc Detective Benoit Blanc solves another case., poster httpsimages.unsplash.comphoto-1536440136628-849c177e76a1w=500&auto=format, trailer httpswww.youtube.comembedgj5ibYSz8C0 }
+    ];
+
+     Helper to create movie card HTML
+    function createMovieCard(movie) {
+        return `
+            div class=movie-card data-id=${movie.id}
+                div class=movie-poster style=background-image url('${movie.poster}');
+                    div class=movie-ratingi class=fas fa-stari ${movie.rating}div
+                div
+                div class=movie-info
+                    div class=movie-title${movie.title}div
+                    div class=movie-year${movie.year} • ${movie.genre}div
+                div
+            div
+        `;
+    }
+
+     Render rows
+    function renderRows() {
+        const trendingMovies = movieDatabase.slice(0, 5);
+        const popularMovies = movieDatabase.slice(2, 8);
+        const actionMovies = movieDatabase.filter(m = m.genre === Action).slice(0, 6);
+        
+        document.getElementById(trendingRow).innerHTML = trendingMovies.map(m = createMovieCard(m)).join();
+        document.getElementById(popularRow).innerHTML = popularMovies.map(m = createMovieCard(m)).join();
+        document.getElementById(actionRow).innerHTML = actionMovies.map(m = createMovieCard(m)).join();
+        
+         Attach click events on all movie cards
+        document.querySelectorAll(.movie-card).forEach(card = {
+            card.addEventListener(click, (e) = {
+                const id = parseInt(card.dataset.id);
+                const movie = movieDatabase.find(m = m.id === id);
+                if (movie) openModalWithMovie(movie);
+                e.stopPropagation();
+            });
+        });
+    }
+
+     Modal management
+    const modal = document.getElementById(videoModal);
+    const modalVideoDiv = document.getElementById(modalVideoContainer);
+    const modalTitleSpan = document.getElementById(modalTitle);
+    const modalDescSpan = document.getElementById(modalDesc);
+    let currentModalMovie = null;
+
+    function openModalWithMovie(movie) {
+        currentModalMovie = movie;
+        modalTitleSpan.innerText = movie.title;
+        modalDescSpan.innerText = movie.desc  Experience the thrill of this exclusive title on FlixStream.;
+         embed youtube trailer
+        let embedUrl = movie.trailer  httpswww.youtube.comembeddQw4w9WgXcQ;
+         ensure embed format
+        if (embedUrl.includes(watchv=)) {
+            embedUrl = embedUrl.replace(watchv=, embed);
+        }
+        modalVideoDiv.innerHTML = `iframe src=${embedUrl}autoplay=1&controls=1 frameborder=0 allow=accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture allowfullscreeniframe`;
+        modal.classList.add(active);
+    }
+
+    function closeModal() {
+        modal.classList.remove(active);
+        if (modalVideoDiv.querySelector(iframe)) {
+            modalVideoDiv.innerHTML = `div style=colorwhite; text-aligncenter;Loading trailer...div`;
+        }
+        currentModalMovie = null;
+    }
+
+     Update Hero section dynamically (based on trending pick or random)
+    function setHeroMovie(movie) {
+        if (!movie) return;
+        document.getElementById(heroTitle).innerText = movie.title;
+        document.getElementById(heroDesc).innerText = movie.desc  Watch the most exciting content on FlixStream.;
+        const heroMetaDiv = document.querySelector(.hero-meta);
+        heroMetaDiv.innerHTML = `spani class=fas fa-star style=color#e50914;i ${movie.rating}span
+                                 span${movie.year}span
+                                 span${movie.duration}span
+                                 span${movie.genre}span`;
+        const heroSection = document.getElementById(heroSection);
+         change background image dynamically but keep overlay readability
+        heroSection.style.backgroundImage = `linear-gradient(0deg, #0f0f0f 0%, transparent 80%), url('${movie.poster}')`;
+        heroSection.style.backgroundSize = cover;
+        heroSection.style.backgroundPosition = center 20%;
+         attach hero play button
+        const heroPlay = document.getElementById(heroPlayBtn);
+        const heroMore = document.getElementById(heroMoreBtn);
+        const newHeroPlay = heroPlay.cloneNode(true);
+        const newHeroMore = heroMore.cloneNode(true);
+        heroPlay.parentNode.replaceChild(newHeroPlay, heroPlay);
+        heroMore.parentNode.replaceChild(newHeroMore, heroMore);
+        newHeroPlay.addEventListener(click, () = openModalWithMovie(movie));
+        newHeroMore.addEventListener(click, () = openModalWithMovie(movie));
+        document.getElementById(heroPlayBtn).addEventListener(click, () = openModalWithMovie(movie));
+        document.getElementById(heroMoreBtn).addEventListener(click, () = openModalWithMovie(movie));
+    }
+
+     function to pick hero from trending
+    function setRandomHero() {
+        const trendingPick = movieDatabase.find(m = m.title === The Batman)  movieDatabase[0];
+        setHeroMovie(trendingPick);
+    }
+
+     Global view all trending
+    document.getElementById(viewAllTrending).addEventListener(click, () = {
+        alert(✨ All trending movies The Batman, John Wick 4, Interstellar, Extraction 2, Oppenheimer. Full catalog coming soon!);
+    });
+    document.getElementById(trendingLink).addEventListener(click, (e) = {
+        e.preventDefault();
+        document.getElementById(trendingRow).scrollIntoView({ behavior smooth });
+    });
+    document.getElementById(closeModalBtn).addEventListener(click, closeModal);
+    modal.addEventListener(click, (e) = {
+        if (e.target === modal) closeModal();
+    });
+    document.getElementById(watchNowBtn).addEventListener(click, () = {
+        if (currentModalMovie) {
+            alert(`▶️ Playing ${currentModalMovie.title} (Full movie demo). Subscribe to watch complete!`);
+        }
+    });
+
+     initial rendering
+    renderRows();
+    setRandomHero();
+script
+body
+html

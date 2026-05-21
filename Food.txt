@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>FlavorHaven | Artisanal Food Discovery</title>
+    <!-- Google Fonts & Simple CSS Reset -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fefaf5;
+            color: #1e1e2a;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* container utility */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* buttons & links */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #e67e22;
+            color: white;
+            font-weight: 600;
+            padding: 12px 28px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 1rem;
+            letter-spacing: -0.2px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e67e22;
+            color: #e67e22;
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: #e67e22;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn:hover {
+            background: #cf711f;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(230, 126, 34, 0.2);
+        }
+
+        /* navbar */
+        .navbar {
+            background: #ffffffdd;
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #ffede0;
+            padding: 18px 0;
+        }
+
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo span {
+            font-size: 1.9rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #e67e22;
+        }
+
+        /* hero section */
+        .hero {
+            padding: 70px 0 80px;
+            background: linear-gradient(120deg, #fff6ed, #fff0e3);
+        }
+
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.2rem;
+            color: #2c221b;
+        }
+
+        .hero-highlight {
+            color: #e67e22;
+            border-bottom: 3px dotted #ffb26e;
+        }
+
+        .hero-content p {
+            font-size: 1.15rem;
+            color: #4a3b2f;
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 32px;
+        }
+
+        .stat-number {
+            font-weight: 800;
+            font-size: 1.7rem;
+            color: #e67e22;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 42px;
+            box-shadow: 0 30px 40px -20px rgba(0,0,0,0.2);
+        }
+
+        /* search & filter */
+        .search-section {
+            background: white;
+            margin-top: -40px;
+            margin-bottom: 50px;
+            position: relative;
+            z-index: 10;
+            border-radius: 60px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            padding: 12px 20px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        .search-input-wrapper {
+            flex: 3;
+            display: flex;
+            align-items: center;
+            background: #fef5ed;
+            border-radius: 60px;
+            padding: 6px 18px;
+            border: 1px solid #ffe2ce;
+        }
+
+        .search-input-wrapper i {
+            color: #e67e22;
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+
+        .search-input-wrapper input {
+            border: none;
+            background: transparent;
+            padding: 14px 0;
+            font-size: 1rem;
+            width: 100%;
+            outline: none;
+            font-weight: 500;
+        }
+
+        .filter-group {
+            flex: 1;
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-group select, .filter-group button {
+            background: #fef5ed;
+            border: 1px solid #ffe2ce;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            outline: none;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        .filter-group select:hover, .filter-group button:hover {
+            background: #fff0e4;
+            border-color: #e67e22;
+        }
+
+        /* featured + menu grid */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
+        }
+
+        .section-sub {
+            color: #6b5a4b;
+            margin-bottom: 48px;
+            font-size: 1.1rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 32px;
+            margin: 40px 0 60px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+            border: 1px solid #fae8db;
+        }
+
+        .food-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12);
+            border-color: #ffcfae;
+        }
+
+        .card-img {
+            height: 210px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: #e67e22;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+        }
+
+        .card-content {
+            padding: 20px 20px 24px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 10px;
+        }
+
+        .card-header h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .price {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #e67e22;
+        }
+
+        .desc {
+            color: #5f4c3c;
+            margin: 10px 0 14px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .order-btn {
+            width: 100%;
+            background: #fef2ea;
+            color: #e67e22;
+            border: none;
+            padding: 12px 0;
+            border-radius: 40px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.2s;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .order-btn:hover {
+            background: #e67e22;
+            color: white;
+        }
+
+        /* cart side panel */
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            height: 100vh;
+            background: white;
+            box-shadow: -8px 0 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: right 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            flex-direction: column;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .cart-panel.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #f0e2d6;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed #f0e0d2;
+        }
+
+        .cart-item-info h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .cart-item-price {
+            color: #e67e22;
+            font-weight: 600;
+        }
+
+        .cart-item-actions button {
+            background: none;
+            border: 1px solid #e2cfbe;
+            width: 28px;
+            border-radius: 30px;
+            margin: 0 4px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .cart-total {
+            padding: 20px;
+            border-top: 2px solid #f1e1d3;
+            font-weight: 800;
+            font-size: 1.3rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .checkout-btn {
+            background: #e67e22;
+            margin: 12px 20px 24px;
+            border: none;
+            padding: 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.2s;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: #e67e22;
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer {
+            background: #2c221b;
+            color: #e9dbd0;
+            padding: 48px 0 24px;
+            margin-top: 64px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        @media (max-width: 700px) {
+            .container { padding: 0 20px; }
+            .hero-content h1 { font-size: 2.4rem; }
+            .cart-panel { width: 100%; right: -100%; }
+            .search-bar { flex-direction: column; align-items: stretch; }
+            .nav-links { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+<div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+        <span><i class="fas fa-bag-shopping"></i> Your order</span>
+        <i class="fas fa-times" id="closeCartBtn" style="cursor:pointer; font-size: 1.4rem;"></i>
+    </div>
+    <div class="cart-items" id="cartItemsList">
+        <div style="text-align:center; color:#aaa;">Cart is empty</div>
+    </div>
+    <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotalPrice">₹0</span>
+    </div>
+    <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout <i class="fas fa-arrow-right"></i></button>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container nav-flex">
+        <div class="logo">
+            <span>🥘</span> FlavorHaven
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#">Offers</a>
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-bag fa-lg"></i>
+                <span class="cart-count" id="cartCountBadge">0</span>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-content">
+            <h1>Savor the <span class="hero-highlight">art</span> of homemade <br>culinary magic</h1>
+            <p>Fresh ingredients, bold flavours, and dishes crafted with passion — delivered to your doorstep.</p>
+            <a href="#menu" class="btn">Explore Menu <i class="fas fa-arrow-right"></i></a>
+            <div class="hero-stats">
+                <div><span class="stat-number">30+</span><br>Signature dishes</div>
+                <div><span class="stat-number">15min</span><br>Avg. prep time</div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&auto=format" alt="delicious food spread">
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="search-section">
+        <div class="search-bar">
+            <div class="search-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by dish name...">
+            </div>
+            <div class="filter-group">
+                <select id="categoryFilter">
+                    <option value="all">All Cuisines</option>
+                    <option value="Italian">Italian</option>
+                    <option value="Asian">Asian</option>
+                    <option value="Indian">Indian</option>
+                    <option value="Mexican">Mexican</option>
+                </select>
+                <button id="resetFiltersBtn"><i class="fas fa-undo-alt"></i> Reset</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="container" id="menu">
+    <div style="text-align:center;">
+        <h2 class="section-title">Curated for your cravings</h2>
+        <p class="section-sub">Handpicked gourmet selections — made with love</p>
+    </div>
+    <div class="menu-grid" id="menuGrid"></div>
+</main>
+
+<footer>
+    <div class="container footer-content">
+        <div>
+            <h3 style="color:white;">FlavorHaven</h3>
+            <p style="margin-top: 12px;">Where taste meets tradition.<br>© 2025 — Artisanal food co.</p>
+        </div>
+        <div>
+            <h4>Contact</h4>
+            <p><i class="fas fa-phone-alt"></i> +91 98765 43210</p>
+            <p><i class="fas fa-envelope"></i> hello@flavorhaven.com</p>
+        </div>
+        <div>
+            <h4>Follow us</h4>
+            <i class="fab fa-instagram" style="font-size: 1.4rem; margin-right: 12px;"></i>
+            <i class="fab fa-twitter" style="font-size: 1.4rem;"></i>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ---------- MENU DATABASE ----------
+    const menuData = [
+        { id: 1, name: "Truffle Risotto", category: "Italian", price: 520, desc: "Creamy arborio rice, wild mushrooms, parmesan", img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=400&auto=format" },
+        { id: 2, name: "Margherita Pizza", category: "Italian", price: 390, desc: "San Marzano tomatoes, mozzarella, basil", img: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&auto=format" },
+        { id: 3, name: "Butter Chicken", category: "Indian", price: 480, desc: "Tender chicken in creamy tomato gravy, naan", img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&auto=format" },
+        { id: 4, name: "Pad Thai", category: "Asian", price: 450, desc: "Rice noodles, prawns, tofu, crushed peanuts", img: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&auto=format" },
+        { id: 5, name: "Tacos Al Pastor", category: "Mexican", price: 380, desc: "Marinated pork, pineapple, cilantro, salsa", img: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&auto=format" },
+        { id: 6, name: "Sushi Platter", category: "Asian", price: 890, desc: "Fresh salmon, avocado, cucumber, wasabi", img: "https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=400&auto=format" },
+        { id: 7, name: "Paneer Tikka", category: "Indian", price: 350, desc: "Cottage cheese, bell peppers, mint chutney", img: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=400&auto=format" },
+        { id: 8, name: "Spaghetti Carbonara", category: "Italian", price: 470, desc: "Pancetta, egg yolk, pecorino cheese", img: "https://images.unsplash.com/photo-1551892374-ecf8754cf8b0?w=400&auto=format" }
+    ];
+
+    // Cart state
+    let cart = [];  // each item { id, name, price, quantity }
+
+    // Helper: update UI (cart badge, total, cart items list)
+    function updateCartUI() {
+        const cartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+        document.getElementById('cartCountBadge').innerText = cartCount;
+        const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        document.getElementById('cartTotalPrice').innerText = `₹${cartTotal}`;
+
+        const cartContainer = document.getElementById('cartItemsList');
+        if (cart.length === 0) {
+            cartContainer.innerHTML = `<div style="text-align:center; color:#aaa; padding:30px;"><i class="fas fa-shopping-basket"></i> Your cart is empty</div>`;
+        } else {
+            cartContainer.innerHTML = cart.map(item => `
+                <div class="cart-item" data-id="${item.id}">
+                    <div class="cart-item-info">
+                        <h4>${item.name}</h4>
+                        <div class="cart-item-price">₹${item.price}</div>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="decrCartBtn" data-id="${item.id}">-</button>
+                        <span style="margin:0 8px; font-weight:600;">${item.quantity}</span>
+                        <button class="incrCartBtn" data-id="${item.id}">+</button>
+                        <button class="removeCartBtn" data-id="${item.id}" style="background:#ffefe5; border:none; margin-left:6px;"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        attachCartItemEvents();
+    }
+
+    function attachCartItemEvents() {
+        document.querySelectorAll('.decrCartBtn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                const idx = cart.findIndex(i => i.id === id);
+                if (idx !== -1) {
+                    if (cart[idx].quantity > 1) cart[idx].quantity--;
+                    else cart.splice(idx, 1);
+                    updateCartUI();
+                    saveCartToLocal();
+                }
+            });
+        });
+        document.querySelectorAll('.incrCartBtn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                const idx = cart.findIndex(i => i.id === id);
+                if (idx !== -1) cart[idx].quantity++;
+                updateCartUI();
+                saveCartToLocal();
+            });
+        });
+        document.querySelectorAll('.removeCartBtn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                cart = cart.filter(i => i.id !== id);
+                updateCartUI();
+                saveCartToLocal();
+            });
+        });
+    }
+
+    function addToCart(menuItem) {
+        const existing = cart.find(i => i.id === menuItem.id);
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({ id: menuItem.id, name: menuItem.name, price: menuItem.price, quantity: 1 });
+        }
+        updateCartUI();
+        saveCartToLocal();
+        // subtle feedback
+        const btn = document.querySelector(`.order-btn[data-id='${menuItem.id}']`);
+        if(btn) {
+            btn.style.transform = "scale(0.97)";
+            setTimeout(()=> btn.style.transform = "", 150);
+        }
+    }
+
+    function saveCartToLocal() {
+        localStorage.setItem('flavor_cart', JSON.stringify(cart));
+    }
+
+    function loadCartFromLocal() {
+        const saved = localStorage.getItem('flavor_cart');
+        if (saved) {
+            try {
+                cart = JSON.parse(saved);
+                updateCartUI();
+            } catch(e) { cart = []; }
+        }
+    }
+
+    // Render menu cards based on filters (search & category)
+    let currentFilterCategory = "all";
+    let currentSearchTerm = "";
+
+    function renderMenu() {
+        const filtered = menuData.filter(item => {
+            const matchesCategory = (currentFilterCategory === "all" || item.category === currentFilterCategory);
+            const matchesSearch = item.name.toLowerCase().includes(currentSearchTerm.toLowerCase());
+            return matchesCategory && matchesSearch;
+        });
+        const grid = document.getElementById('menuGrid');
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:60px;"><i class="fas fa-utensils fa-2x" style="color:#e67e22;"></i><p style="margin-top:12px;">No dishes match. Try something else!</p></div>`;
+            return;
+        }
+        grid.innerHTML = filtered.map(item => `
+            <div class="food-card">
+                <div class="card-img" style="background-image: url('${item.img}'); background-size: cover;">
+                    <div class="badge">${item.category}</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-header">
+                        <h3>${item.name}</h3>
+                        <span class="price">₹${item.price}</span>
+                    </div>
+                    <p class="desc">${item.desc}</p>
+                    <button class="order-btn" data-id="${item.id}"><i class="fas fa-plus-circle"></i> Add to Cart</button>
+                </div>
+            </div>
+        `).join('');
+
+        // attach add to cart events
+        document.querySelectorAll('.order-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.getAttribute('data-id'));
+                const foundItem = menuData.find(m => m.id === id);
+                if (foundItem) addToCart(foundItem);
+            });
+        });
+    }
+
+    // filter handlers
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        currentSearchTerm = e.target.value;
+        renderMenu();
+    });
+    document.getElementById('categoryFilter').addEventListener('change', (e) => {
+        currentFilterCategory = e.target.value;
+        renderMenu();
+    });
+    document.getElementById('resetFiltersBtn').addEventListener('click', () => {
+        document.getElementById('searchInput').value = "";
+        document.getElementById('categoryFilter').value = "all";
+        currentSearchTerm = "";
+        currentFilterCategory = "all";
+        renderMenu();
+    });
+
+    // cart panel handlers
+    const cartPanel = document.getElementById('cartPanel');
+    const overlay = document.getElementById('overlay');
+    function openCart() {
+        cartPanel.classList.add('open');
+        overlay.classList.add('active');
+    }
+    function closeCart() {
+        cartPanel.classList.remove('open');
+        overlay.classList.remove('active');
+    }
+    document.getElementById('cartIcon').addEventListener('click', openCart);
+    document.getElementById('closeCartBtn').addEventListener('click', closeCart);
+    overlay.addEventListener('click', closeCart);
+    document.getElementById('checkoutBtn').addEventListener('click', () => {
+        if(cart.length === 0) {
+            alert("Your cart is empty! Add some delicious items first.");
+            return;
+        }
+        alert(`✅ Order placed! Total ₹${cart.reduce((s,i)=>s+(i.price*i.quantity),0)}. Thank you for ordering from FlavorHaven.`);
+        cart = [];
+        updateCartUI();
+        saveCartToLocal();
+        closeCart();
+    });
+
+    // initial load
+    loadCartFromLocal();
+    renderMenu();
+</script>
+</body>
+</html>

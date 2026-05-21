@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>CineBook | Premium Movie Tickets</title>
+    <!-- Google Fonts + Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #0a0c15;
+            color: #eef2ff;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* custom scroll */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1a1f2e; }
+        ::-webkit-scrollbar-thumb { background: #f5b642; border-radius: 10px; }
+
+        /* buttons */
+        .btn-primary {
+            background: linear-gradient(105deg, #f5b642 0%, #e07c1f 100%);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            color: #0a0c15;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(245,182,66,0.25);
+            filter: brightness(1.02);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #f5b642;
+            border-radius: 40px;
+            padding: 8px 20px;
+            color: #f5b642;
+            font-weight: 600;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .btn-outline:hover {
+            background: rgba(245,182,66,0.1);
+            border-color: #ffc857;
+        }
+
+        /* navbar */
+        .navbar {
+            background: #0f111cce;
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #232736;
+            padding: 18px 0;
+        }
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #f5b642, #ffd966);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            font-weight: 500;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #cdd9ff;
+            transition: 0.2s;
+        }
+        .nav-links a:hover { color: #f5b642; }
+
+        /* hero */
+        .hero {
+            background: radial-gradient(circle at 20% 30%, #11141f, #07090f);
+            padding: 60px 0 70px;
+        }
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 48px;
+        }
+        .hero-text h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .hero-text .accent {
+            color: #f5b642;
+        }
+        .hero-text p {
+            color: #9ca3c7;
+            margin: 24px 0 32px;
+            font-size: 1.1rem;
+            max-width: 500px;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 24px;
+        }
+        .stat {
+            font-weight: 700;
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #f5b642;
+        }
+        .hero-img img {
+            max-width: 100%;
+            border-radius: 36px;
+            box-shadow: 0 25px 40px -12px black;
+        }
+
+        /* search & filter row */
+        .search-section {
+            margin-top: -32px;
+            position: relative;
+            z-index: 12;
+        }
+        .filter-card {
+            background: #13172b;
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 8px 20px 8px 28px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #2a2f45;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            flex: 2;
+            gap: 12px;
+        }
+        .search-box i { color: #f5b642; font-size: 1.2rem; }
+        .search-box input {
+            background: transparent;
+            border: none;
+            padding: 14px 0;
+            width: 100%;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+        .filters {
+            display: flex;
+            gap: 12px;
+        }
+        .filters select, .filters button {
+            background: #1e233b;
+            border: 1px solid #2f354e;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* movie grid */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 50px 0 12px;
+        }
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 32px;
+            margin: 40px 0 60px;
+        }
+        .movie-card {
+            background: #10131f;
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+            border: 1px solid #252b40;
+            cursor: pointer;
+        }
+        .movie-card:hover {
+            transform: translateY(-8px);
+            border-color: #f5b642;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.6);
+        }
+        .movie-poster {
+            height: 320px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .rating-badge {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: #06080fe6;
+            backdrop-filter: blur(4px);
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .rating-badge i { color: #f5b642; margin-right: 4px; }
+        .movie-info {
+            padding: 18px 18px 24px;
+        }
+        .movie-title {
+            font-weight: 800;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .movie-genre {
+            color: #a6b0cf;
+            font-size: 0.8rem;
+            margin: 8px 0;
+        }
+        .book-btn {
+            width: 100%;
+            background: #1f253e;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            color: #f5b642;
+            margin-top: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .book-btn:hover { background: #f5b642; color: #0a0c15; }
+
+        /* booking modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container {
+            background: #11141f;
+            max-width: 550px;
+            width: 90%;
+            border-radius: 40px;
+            border: 1px solid #2f354e;
+            padding: 28px;
+            position: relative;
+        }
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 12px;
+            margin: 30px 0;
+        }
+        .seat {
+            background: #232842;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .seat.selected { background: #f5b642; color: #0a0c15; }
+        .seat.booked { background: #4a2f2f; cursor: not-allowed; opacity: 0.6; }
+        .seat.available:hover { background: #f5b64280; }
+        .booking-summary {
+            background: #1a1e31;
+            padding: 20px;
+            border-radius: 28px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 24px;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #080b12;
+            padding: 40px 0;
+            margin-top: 40px;
+            border-top: 1px solid #1f253e;
+            text-align: center;
+        }
+        @media (max-width: 720px) {
+            .container { padding: 0 20px; }
+            .hero-text h1 { font-size: 2.2rem; }
+            .filter-card { flex-direction: column; border-radius: 30px; gap: 12px; align-items: stretch; }
+            .seat-grid { gap: 8px; }
+            .seat { height: 34px; font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- MODAL for seat selection -->
+<div class="modal-overlay" id="bookingModal">
+    <div class="modal-container">
+        <i class="fas fa-times close-modal" id="closeModalBtn"></i>
+        <h2 id="modalMovieTitle" style="font-size: 1.5rem;">Select your seats</h2>
+        <div style="margin: 10px 0 0; color:#b9c3e6;">Screen <i class="fas fa-film"></i></div>
+        <div class="seat-grid" id="seatGrid"></div>
+        <div class="booking-summary">
+            <div style="display: flex; justify-content: space-between;"><span>Selected seats:</span> <strong id="selectedSeatsDisplay">None</strong></div>
+            <div style="display: flex; justify-content: space-between; margin-top: 12px;"><span>Price per ticket:</span> <strong>₹180</strong></div>
+            <div style="display: flex; justify-content: space-between; font-size: 1.2rem; margin-top: 12px;"><span>Total:</span> <strong id="totalPriceSpan">₹0</strong></div>
+            <button class="btn-primary" id="confirmBookingBtn" style="width:100%; margin-top: 20px; justify-content: center;">Confirm Booking <i class="fas fa-ticket-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container nav-flex">
+        <div class="logo"><i class="fas fa-clapperboard"></i> CineBook</div>
+        <div class="nav-links">
+            <a href="#">Now Showing</a>
+            <a href="#">Coming Soon</a>
+            <a href="#" id="myBookingsBtn"><i class="fas fa-ticket"></i> My Bookings</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-text">
+            <h1>Experience <span class="accent">cinema</span> like never before</h1>
+            <p>Book movie tickets instantly, choose your perfect seat, and enjoy blockbusters in premium quality.</p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-number">500+</span><br>Screens</div>
+                <div class="stat"><span class="stat-number">4K/IMAX</span><br>Premium sound</div>
+            </div>
+            <button class="btn-primary" id="exploreBtn"><i class="fas fa-arrow-down"></i> Explore movies</button>
+        </div>
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&auto=format" alt="cinema hall">
+        </div>
+    </div>
+</section>
+
+<div class="container search-section">
+    <div class="filter-card">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="movieSearch" placeholder="Search movies... (Inception, Avatar, etc)">
+        </div>
+        <div class="filters">
+            <select id="genreFilter">
+                <option value="all">All Genres</option>
+                <option value="Action">Action</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Drama">Drama</option>
+                <option value="Adventure">Adventure</option>
+                <option value="Thriller">Thriller</option>
+            </select>
+            <button id="resetFilterBtn"><i class="fas fa-sync-alt"></i> Reset</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h2 class="section-title">🎬 Now Showing</h2>
+    <div class="movie-grid" id="movieGrid"></div>
+</div>
+
+<footer>
+    <div class="container">
+        <p><i class="fas fa-crown"></i> CineBook — Premium movie experience | © 2025 all rights reserved</p>
+        <div style="margin-top: 16px; display: flex; justify-content: center; gap: 20px;">
+            <i class="fab fa-instagram"></i> <i class="fab fa-twitter"></i> <i class="fab fa-facebook"></i>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // MOVIE DATABASE with images (from unsplash)
+    const movies = [
+        { id: 1, title: "Interstellar", genre: "Sci-Fi", rating: 8.7, year: "2014", duration: "2h 49m", img: "https://images.unsplash.com/photo-1534809027769-b00d750a6bac?w=500&auto=format", bookedSeats: ["A3","B5"] },
+        { id: 2, title: "John Wick 4", genre: "Action", rating: 8.2, year: "2023", duration: "2h 49m", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?w=500&auto=format", bookedSeats: ["C1","C2"] },
+        { id: 3, title: "The Batman", genre: "Action", rating: 8.0, year: "2022", duration: "2h 56m", img: "https://images.unsplash.com/photo-1509347528160-9a9e33742cdb?w=500&auto=format", bookedSeats: ["D4"] },
+        { id: 4, title: "Dune: Part Two", genre: "Adventure", rating: 8.9, year: "2024", duration: "2h 46m", img: "https://images.unsplash.com/photo-1587923623987-c7e4083beb23?w=500&auto=format", bookedSeats: ["B2","B3"] },
+        { id: 5, title: "Oppenheimer", genre: "Drama", rating: 8.6, year: "2023", duration: "3h", img: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=500&auto=format", bookedSeats: ["E1","E5"] },
+        { id: 6, title: "Inception", genre: "Sci-Fi", rating: 8.8, year: "2010", duration: "2h 28m", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=500&auto=format", bookedSeats: ["A1"] }
+    ];
+
+    // Predefined seat layout (rows A-E, 1-6)
+    const seatLabels = ["A1","A2","A3","A4","A5","A6", "B1","B2","B3","B4","B5","B6", "C1","C2","C3","C4","C5","C6", "D1","D2","D3","D4","D5","D6", "E1","E2","E3","E4","E5","E6"];
+
+    let currentMovie = null;
+    let selectedSeats = [];
+    let userBookings = JSON.parse(localStorage.getItem("cinebookings")) || []; // store {movieId, movieTitle, seats, total}
+
+    // render movie grid based on filter/search
+    let currentGenre = "all";
+    let currentSearch = "";
+
+    function renderMovies() {
+        let filtered = movies.filter(m => {
+            const matchGenre = currentGenre === "all" || m.genre === currentGenre;
+            const matchSearch = m.title.toLowerCase().includes(currentSearch.toLowerCase());
+            return matchGenre && matchSearch;
+        });
+        const grid = document.getElementById("movieGrid");
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px;">🎞️ No movies found. Try another genre.</div>`;
+            return;
+        }
+        grid.innerHTML = filtered.map(movie => `
+            <div class="movie-card" data-id="${movie.id}">
+                <div class="movie-poster" style="background-image: url('${movie.img}');">
+                    <div class="rating-badge"><i class="fas fa-star"></i> ${movie.rating} / 10</div>
+                </div>
+                <div class="movie-info">
+                    <div class="movie-title">${movie.title} <span style="font-size:0.8rem;">${movie.year}</span></div>
+                    <div class="movie-genre">${movie.genre} • ${movie.duration}</div>
+                    <button class="book-btn" data-id="${movie.id}"><i class="fas fa-ticket-alt"></i> Book Tickets</button>
+                </div>
+            </div>
+        `).join('');
+        // attach booking events
+        document.querySelectorAll('.book-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                const movie = movies.find(m => m.id === id);
+                if (movie) openBookingModal(movie);
+                e.stopPropagation();
+            });
+        });
+    }
+
+    // open seat selection modal
+    function openBookingModal(movie) {
+        currentMovie = movie;
+        selectedSeats = [];
+        document.getElementById("modalMovieTitle").innerText = movie.title;
+        generateSeatGrid(movie.bookedSeats);
+        updateModalSummary();
+        document.getElementById("bookingModal").classList.add("active");
+    }
+
+    function generateSeatGrid(bookedSeatsArray) {
+        const seatContainer = document.getElementById("seatGrid");
+        seatContainer.innerHTML = "";
+        seatLabels.forEach(seat => {
+            const isBooked = bookedSeatsArray.includes(seat);
+            const isSelected = selectedSeats.includes(seat);
+            const seatDiv = document.createElement("div");
+            seatDiv.classList.add("seat");
+            if (isBooked) seatDiv.classList.add("booked");
+            if (isSelected) seatDiv.classList.add("selected");
+            seatDiv.innerText = seat;
+            if (!isBooked) {
+                seatDiv.classList.add("available");
+                seatDiv.addEventListener("click", () => {
+                    if (selectedSeats.includes(seat)) {
+                        selectedSeats = selectedSeats.filter(s => s !== seat);
+                    } else {
+                        selectedSeats.push(seat);
+                    }
+                    generateSeatGrid(currentMovie.bookedSeats);
+                    updateModalSummary();
+                });
+            }
+            seatContainer.appendChild(seatDiv);
+        });
+    }
+
+    function updateModalSummary() {
+        const count = selectedSeats.length;
+        const total = count * 180;
+        document.getElementById("selectedSeatsDisplay").innerText = count ? selectedSeats.join(", ") : "None";
+        document.getElementById("totalPriceSpan").innerHTML = `₹${total}`;
+    }
+
+    function confirmBooking() {
+        if (!currentMovie) return;
+        if (selectedSeats.length === 0) {
+            alert("Please select at least one seat.");
+            return;
+        }
+        // check if seats are still available (avoid race, but static)
+        const conflict = selectedSeats.some(seat => currentMovie.bookedSeats.includes(seat));
+        if (conflict) {
+            alert("Some of your selected seats are no longer available. Please reselect.");
+            openBookingModal(currentMovie);
+            return;
+        }
+        // add to local storage booking
+        const bookingRecord = {
+            id: Date.now(),
+            movieId: currentMovie.id,
+            movieTitle: currentMovie.title,
+            seats: [...selectedSeats],
+            total: selectedSeats.length * 180,
+            date: new Date().toLocaleString()
+        };
+        userBookings.push(bookingRecord);
+        localStorage.setItem("cinebookings", JSON.stringify(userBookings));
+        // update movie's booked seats (persist in memory + local)
+        currentMovie.bookedSeats.push(...selectedSeats);
+        // update static movies array in memory, but also store updated booked seats to localStorage for "my bookings" reflection
+        const movieIndex = movies.findIndex(m => m.id === currentMovie.id);
+        if(movieIndex !== -1) movies[movieIndex].bookedSeats = currentMovie.bookedSeats;
+        // store movies state into localStorage for persistence
+        localStorage.setItem("cine_movies_state", JSON.stringify(movies.map(m => ({ id: m.id, bookedSeats: m.bookedSeats }))));
+        
+        alert(`🎉 Booking confirmed!\nMovie: ${currentMovie.title}\nSeats: ${selectedSeats.join(", ")}\nTotal: ₹${selectedSeats.length * 180}\nScreenshot this for check-in.`);
+        closeModal();
+        renderMovies(); // refresh grid (booked buttons state visual)
+    }
+
+    function closeModal() {
+        document.getElementById("bookingModal").classList.remove("active");
+        currentMovie = null;
+        selectedSeats = [];
+    }
+
+    // My Bookings panel (simple modal or alert)
+    function showMyBookings() {
+        if (userBookings.length === 0) {
+            alert("📭 You have no bookings yet. Book your first movie ticket!");
+            return;
+        }
+        let message = "🎟️ YOUR BOOKINGS:\n\n";
+        userBookings.forEach((b, idx) => {
+            message += `${idx+1}. ${b.movieTitle} | Seats: ${b.seats.join(", ")} | ₹${b.total} | ${b.date}\n`;
+        });
+        alert(message);
+    }
+
+    // load persisted booked seats from localStorage (sync)
+    function loadPersistedBookings() {
+        const savedState = localStorage.getItem("cine_movies_state");
+        if (savedState) {
+            const state = JSON.parse(savedState);
+            state.forEach(updated => {
+                const movie = movies.find(m => m.id === updated.id);
+                if (movie) movie.bookedSeats = updated.bookedSeats;
+            });
+        }
+        // also load user bookings array
+        const storedBookings = localStorage.getItem("cinebookings");
+        if (storedBookings) userBookings = JSON.parse(storedBookings);
+    }
+
+    // event listeners
+    document.getElementById("movieSearch").addEventListener("input", (e) => {
+        currentSearch = e.target.value;
+        renderMovies();
+    });
+    document.getElementById("genreFilter").addEventListener("change", (e) => {
+        currentGenre = e.target.value;
+        renderMovies();
+    });
+    document.getElementById("resetFilterBtn").addEventListener("click", () => {
+        document.getElementById("movieSearch").value = "";
+        document.getElementById("genreFilter").value = "all";
+        currentSearch = "";
+        currentGenre = "all";
+        renderMovies();
+    });
+    document.getElementById("exploreBtn").addEventListener("click", () => {
+        document.querySelector(".movie-grid").scrollIntoView({ behavior: "smooth" });
+    });
+    document.getElementById("myBookingsBtn").addEventListener("click", showMyBookings);
+    document.getElementById("confirmBookingBtn").addEventListener("click", confirmBooking);
+    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+    document.getElementById("bookingModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("bookingModal")) closeModal();
+    });
+
+    // initial load
+    loadPersistedBookings();
+    renderMovies();
+</script>
+</body>
+</html>

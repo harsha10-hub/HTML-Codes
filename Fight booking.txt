@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>SkyConnect India | Book Flights to Amazing Destinations</title>
+    <!-- Google Fonts + Modern Styling -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (Free Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f0f5fa;
+            color: #1a2c3e;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background: #e64b2e;
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 8px 16px rgba(230,75,46,0.2);
+        }
+
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #1e3c72 0%, #e64b2e 80%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 600;
+            color: #2c3e50;
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #e64b2e;
+        }
+
+        .btn-outline {
+            border: 1.5px solid #e64b2e;
+            padding: 8px 22px;
+            border-radius: 40px;
+            background: transparent;
+            font-weight: 600;
+            color: #e64b2e;
+        }
+
+        .btn-solid {
+            background: #e64b2e;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(230,75,46,0.3);
+        }
+
+        .btn-solid:hover {
+            background: #c73d22;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section with India flight image */
+        .hero {
+            background: linear-gradient(120deg, #eef4ff 0%, #ffffff 100%);
+            padding: 3rem 0 4rem;
+        }
+
+        .hero-grid {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-badge {
+            background: #ffede8;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #e64b2e;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #0a2540;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: #4a627a;
+            margin-bottom: 2rem;
+        }
+
+        .hero-image {
+            flex: 1;
+            background: url('https://images.pexels.com/photos/6261205/indian-airplane-wing-sunset-6261205.jpg?auto=compress&cs=tinysrgb&w=600') center/cover no-repeat;
+            border-radius: 32px;
+            min-height: 320px;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+        }
+
+        /* flight booking card main */
+        .booking-card {
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 28px 48px -20px rgba(0,0,0,0.2);
+            margin: -2rem 0 3rem;
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+        }
+
+        .booking-title {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+            border-bottom: 2px solid #f0eef2;
+            padding-bottom: 1rem;
+        }
+
+        .tab {
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            background: #f2f4f8;
+            color: #4a627a;
+        }
+
+        .tab.active {
+            background: #e64b2e;
+            color: white;
+        }
+
+        .flight-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: flex-end;
+        }
+
+        .form-field {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .form-field label {
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #7c8b9b;
+        }
+
+        .form-field input, .form-field select {
+            width: 100%;
+            padding: 12px 12px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            font-family: inherit;
+            margin-top: 6px;
+            background: #fefefe;
+        }
+
+        .search-btn {
+            background: #e64b2e;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 36px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* destinations grid */
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 3rem 0 0.5rem;
+            color: #0a2540;
+        }
+
+        .dest-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0 2rem;
+        }
+
+        .dest-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.25s;
+            box-shadow: 0 12px 24px -12px rgba(0,0,0,0.08);
+        }
+
+        .dest-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+        }
+
+        .dest-img {
+            height: 190px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .dest-info {
+            padding: 1.2rem;
+        }
+
+        .dest-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .price-tag {
+            color: #e64b2e;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+
+        .select-flight {
+            background: #fef2ef;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            border-radius: 40px;
+            font-weight: 600;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        /* offers / features */
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            text-align: center;
+            background: white;
+            padding: 1rem 1.8rem;
+            border-radius: 60px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.03);
+        }
+
+        /* trip inspiration gallery */
+        .inspire-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .inspire-card {
+            border-radius: 28px;
+            overflow: hidden;
+            width: 260px;
+            background: white;
+        }
+
+        /* testimonials */
+        .testimonial {
+            background: #ffffffdd;
+            backdrop-filter: blur(4px);
+            border-radius: 48px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            border: 1px solid #ffe0d6;
+        }
+
+        footer {
+            background: #0f212e;
+            color: #cfdfed;
+            padding: 2.5rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-flex {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .copyright {
+            text-align: center;
+            border-top: 1px solid #2f4458;
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 780px) {
+            .flight-form {
+                flex-direction: column;
+            }
+            .container {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<div class="navbar">
+    <div class="container nav-flex">
+        <div class="logo-area">
+            <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+            <div class="logo-text">SkyConnect India</div>
+        </div>
+        <div class="nav-links">
+            <a href="#">Flights</a>
+            <a href="#">Hotels</a>
+            <a href="#">Holiday Packages</a>
+            <a href="#" class="btn-outline"><i class="fas fa-user-circle"></i> Login</a>
+        </div>
+    </div>
+</div>
+
+<!-- Hero section -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-rupee-sign"></i> Fly more, save more</div>
+            <h1>Explore incredible India <br> with best flight deals</h1>
+            <p>From mountains to beaches — book domestic flights at unbeatable prices. Instant confirmation, safe travel.</p>
+            <button class="btn-solid" id="scrollToBooking"><i class="fas fa-search"></i> Search flights</button>
+        </div>
+        <div class="hero-image" alt="Flight over Indian landscape"></div>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Main Flight Booking Panel -->
+    <div class="booking-card" id="bookingPanel">
+        <div class="booking-title">
+            <div class="tab active"><i class="fas fa-plane"></i> Round trip</div>
+            <div class="tab">One way</div>
+            <div class="tab">Multi-city</div>
+        </div>
+        <form id="flightSearchForm">
+            <div class="flight-form">
+                <div class="form-field">
+                    <label>From</label>
+                    <select id="fromCity" required>
+                        <option value="Delhi (DEL)">Delhi (DEL)</option>
+                        <option value="Mumbai (BOM)">Mumbai (BOM)</option>
+                        <option value="Bengaluru (BLR)">Bengaluru (BLR)</option>
+                        <option value="Chennai (MAA)">Chennai (MAA)</option>
+                        <option value="Kolkata (CCU)">Kolkata (CCU)</option>
+                        <option value="Hyderabad (HYD)">Hyderabad (HYD)</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>To</label>
+                    <select id="toCity" required>
+                        <option value="Goa (GOI)">Goa (GOI)</option>
+                        <option value="Jaipur (JAI)">Jaipur (JAI)</option>
+                        <option value="Varanasi (VNS)">Varanasi (VNS)</option>
+                        <option value="Coimbatore (CJB)">Coimbatore (CJB)</option>
+                        <option value="Udaipur (UDR)">Udaipur (UDR)</option>
+                        <option value="Kochi (COK)">Kochi (COK)</option>
+                    </select>
+                </div>
+                <div class="form-field">
+                    <label>Departure</label>
+                    <input type="date" id="departDate" required>
+                </div>
+                <div class="form-field">
+                    <label>Return</label>
+                    <input type="date" id="returnDate">
+                </div>
+                <div class="form-field">
+                    <label>Passengers</label>
+                    <select id="passengers">
+                        <option>1 Adult</option><option>2 Adults</option><option>3 Adults</option><option>4 Adults</option>
+                    </select>
+                </div>
+                <button type="submit" class="search-btn"><i class="fas fa-arrow-right"></i> Search Flights</button>
+            </div>
+        </form>
+        <div id="flightResultMsg" style="margin-top: 1.5rem; display: none; background: #eef3fa; border-radius: 28px; padding: 1rem; text-align: center;"></div>
+    </div>
+
+    <!-- Top Destinations in India -->
+    <div class="section-title">✈️ Popular Indian Destinations</div>
+    <div class="dest-grid" id="destinationsGrid"></div>
+
+    <!-- Additional images + features -->
+    <div class="features">
+        <div class="feature-item"><i class="fas fa-rupee-sign" style="color:#e64b2e;"></i> Zero cancellation fees</div>
+        <div class="feature-item"><i class="fas fa-headset"></i> 24/7 support</div>
+        <div class="feature-item"><i class="fas fa-gem"></i> Instant Web check-in</div>
+        <div class="feature-item"><i class="fas fa-shield-alt"></i> COVID-safe travel</div>
+    </div>
+
+    <!-- Visual gallery from India -->
+    <div class="inspire-grid">
+        <div class="inspire-card"><img src="https://images.pexels.com/photos/1603650/taj-mahal-agra-india-1603650.jpeg?auto=compress&cs=tinysrgb&w=400" style="width:100%; height:160px; object-fit:cover;"><p style="padding: 12px; font-weight: 600;">Agra · Taj Mahal</p></div>
+        <div class="inspire-card"><img src="https://images.pexels.com/photos/3794906/beach-in-goa-india-3794906.jpg?auto=compress&cs=tinysrgb&w=400" style="width:100%; height:160px; object-fit:cover;"><p style="padding: 12px; font-weight: 600;">Goa · Beaches</p></div>
+        <div class="inspire-card"><img src="https://images.pexels.com/photos/2559941/backwaters-of-kerala-2559941.jpg?auto=compress&cs=tinysrgb&w=400" style="width:100%; height:160px; object-fit:cover;"><p style="padding: 12px; font-weight: 600;">Kerala · Backwaters</p></div>
+        <div class="inspire-card"><img src="https://images.pexels.com/photos/1614421/gadi-lake-palace-udaipur-1614421.jpg?auto=compress&cs=tinysrgb&w=400" style="width:100%; height:160px; object-fit:cover;"><p style="padding: 12px; font-weight: 600;">Udaipur · City of Lakes</p></div>
+    </div>
+
+    <!-- Testimonial -->
+    <div class="testimonial">
+        <i class="fas fa-quote-left" style="font-size: 2rem; color:#e64b2e; opacity:0.7;"></i>
+        <p style="font-size: 1.1rem; margin: 1rem;">"SkyConnect made my Goa trip seamless – best fares and smooth booking. Highly recommend for domestic travel!"</p>
+        <p><strong>— Ananya Sharma, Jaipur</strong> <i class="fas fa-star" style="color:#f5b042;"></i><i class="fas fa-star" style="color:#f5b042;"></i><i class="fas fa-star" style="color:#f5b042;"></i><i class="fas fa-star" style="color:#f5b042;"></i><i class="fas fa-star"></i></p>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-flex">
+            <div>
+                <h3><i class="fas fa-plane"></i> SkyConnect India</h3>
+                <p>DGCA Approved Aggregator</p>
+            </div>
+            <div>
+                <p><i class="fas fa-phone"></i> +91 124 456 7890</p>
+                <p><i class="fas fa-envelope"></i> help@skyconnect.in</p>
+                <p><i class="fab fa-instagram"></i> <i class="fab fa-twitter"></i> @skyconnect_india</p>
+            </div>
+            <div>
+                <p><i class="fas fa-shield-alt"></i> Secure booking</p>
+                <p><i class="fas fa-credit-card"></i>多种支付方式</p>
+            </div>
+        </div>
+        <div class="copyright">© 2025 SkyConnect India — Fly with confidence. All rights reserved.</div>
+    </div>
+</footer>
+
+<script>
+    // dynamic destinations for india (flight suggestive)
+    const destinations = [
+        { name: "Goa", img: "https://images.pexels.com/photos/2728912/beach-sunset-sea-ocean-2728912.jpg?auto=compress&cs=tinysrgb&w=400", price: "from ₹2,499", desc: "Sun, sand & parties" },
+        { name: "Jaipur", img: "https://images.pexels.com/photos/2044292/amber-fort-jaipur-2044292.jpg?auto=compress&cs=tinysrgb&w=400", price: "from ₹3,199", desc: "Pink City palaces" },
+        { name: "Varanasi", img: "https://images.pexels.com/photos/3176082/varanasi-ganga-aarti-3176082.jpg?auto=compress&cs=tinysrgb&w=400", price: "from ₹3,899", desc: "Ganga ghats" },
+        { name: "Kochi", img: "https://images.pexels.com/photos/5676441/backwaters-kerala-5676441.jpg?auto=compress&cs=tinysrgb&w=400", price: "from ₹3,549", desc: "God's own country" }
+    ];
+
+    function renderDestinations() {
+        const grid = document.getElementById('destinationsGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        destinations.forEach(dest => {
+            const card = document.createElement('div');
+            card.className = 'dest-card';
+            card.innerHTML = `
+                <img class="dest-img" src="${dest.img}" alt="${dest.name}" loading="lazy">
+                <div class="dest-info">
+                    <h3>${dest.name}</h3>
+                    <p style="color:#5d7184;">${dest.desc}</p>
+                    <div class="price-tag">${dest.price}</div>
+                    <button class="select-flight" data-dest="${dest.name}"><i class="fas fa-ticket-alt"></i> View flights</button>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+        // attach events after
+        document.querySelectorAll('.select-flight').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const destName = btn.getAttribute('data-dest');
+                const toSelect = document.getElementById('toCity');
+                // fuzzy match to select city
+                const options = toSelect.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].value.toLowerCase().includes(destName.toLowerCase())) {
+                        toSelect.selectedIndex = i;
+                        break;
+                    } else if (destName === "Goa" && options[i].value.includes("GOI")) toSelect.selectedIndex = i;
+                    else if (destName === "Jaipur" && options[i].value.includes("JAI")) toSelect.selectedIndex = i;
+                    else if (destName === "Varanasi" && options[i].value.includes("VNS")) toSelect.selectedIndex = i;
+                    else if (destName === "Kochi" && options[i].value.includes("COK")) toSelect.selectedIndex = i;
+                }
+                document.getElementById('bookingPanel').scrollIntoView({ behavior: 'smooth' });
+                const msgDiv = document.getElementById('flightResultMsg');
+                msgDiv.style.display = 'block';
+                msgDiv.innerHTML = `✨ Destination set to ${destName}. Select dates to book flights.`;
+                msgDiv.style.background = "#fff0e6";
+                setTimeout(() => {
+                    msgDiv.style.opacity = '0';
+                    setTimeout(() => { msgDiv.style.display = 'none'; msgDiv.style.opacity = '1'; }, 1000);
+                }, 2000);
+            });
+        });
+    }
+
+    // handle flight search form
+    const flightForm = document.getElementById('flightSearchForm');
+    const resultMsg = document.getElementById('flightResultMsg');
+
+    function generateFlightResults(from, to, depart, returnDate, paxCount) {
+        const airlines = ['IndiGo', 'Air India', 'SpiceJet', 'Akasa Air', 'Vistara'];
+        const randomAirline = airlines[Math.floor(Math.random() * airlines.length)];
+        const priceBase = Math.floor(Math.random() * (4500 - 2100 + 1) + 2100);
+        const totalPrice = priceBase * (paxCount === '1 Adult' ? 1 : paxCount === '2 Adults' ? 2 : paxCount === '3 Adults' ? 3 : 4);
+        const flightNo = Math.floor(Math.random() * 9000 + 1000);
+        const departureTime = `${Math.floor(Math.random() * 12 + 5)}:${Math.floor(Math.random() * 60)} ${Math.random() > 0.5 ? 'AM' : 'PM'}`;
+        if (returnDate) {
+            return `✈️ ${randomAirline} ${flightNo} · ${from} → ${to} · Dep ${departDate} · Return ${returnDate} · ${paxCount} · Total ₹${totalPrice} (incl. taxes). Great deal! Book now.`;
+        } else {
+            return `✈️ ${randomAirline} ${flightNo} · One-way from ${from} to ${to} on ${departDate} · ${paxCount} · ₹${priceBase} per person | Total ₹${totalPrice}. Secure your seat!`;
+        }
+    }
+
+    flightForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const fromCity = document.getElementById('fromCity').value;
+        const toCity = document.getElementById('toCity').value;
+        const departDate = document.getElementById('departDate').value;
+        const returnDate = document.getElementById('returnDate').value;
+        const passengers = document.getElementById('passengers').value;
+
+        if (!fromCity || !toCity) {
+            showMsg("Please select departure and arrival cities.", true);
+            return;
+        }
+        if (fromCity === toCity) {
+            showMsg("Origin and destination cannot be same. Choose different cities.", true);
+            return;
+        }
+        if (!departDate) {
+            showMsg("Select departure date.", true);
+            return;
+        }
+        const today = new Date().toISOString().split('T')[0];
+        if (departDate < today) {
+            showMsg("Departure date cannot be in the past.", true);
+            return;
+        }
+        if (returnDate && returnDate < departDate) {
+            showMsg("Return date must be after departure date.", true);
+            return;
+        }
+
+        const flightInfo = generateFlightResults(fromCity, toCity, departDate, returnDate, passengers);
+        showMsg(flightInfo, false);
+
+        // Optionally reset form partially? we keep but show confirmation
+    });
+
+    function showMsg(msg, isError) {
+        resultMsg.style.display = 'block';
+        resultMsg.innerHTML = `<i class="fas fa-plane"></i> ${msg}`;
+        resultMsg.style.backgroundColor = isError ? '#ffe8e6' : '#e3f2fd';
+        resultMsg.style.color = isError ? '#b33c2e' : '#145c8f';
+        setTimeout(() => {
+            resultMsg.style.opacity = '0';
+            setTimeout(() => {
+                resultMsg.style.display = 'none';
+                resultMsg.style.opacity = '1';
+            }, 1000);
+        }, 5000);
+    }
+
+    // set min dates
+    const todayStr = new Date().toISOString().split('T')[0];
+    const departInput = document.getElementById('departDate');
+    const returnInput = document.getElementById('returnDate');
+    if (departInput) departInput.min = todayStr;
+    if (returnInput) returnInput.min = todayStr;
+
+    // scroll to booking on click
+    document.getElementById('scrollToBooking')?.addEventListener('click', () => {
+        document.getElementById('bookingPanel').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // also attach quick select from destinations
+    renderDestinations();
+</script>
+</body>
+</html>

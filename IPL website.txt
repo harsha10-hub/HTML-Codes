@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>IPL 2026 | Indian Premier League – Next Gen Cricket</title>
+  <!-- Google Fonts & CSS Reset -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0a0f1c;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #f0f3fa;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* custom scroll */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #12172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #f9a826;
+      border-radius: 10px;
+    }
+
+    /* container */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+
+    /* sticky header */
+    .header {
+      background: rgba(2, 6, 20, 0.96);
+      backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 2px solid #f9a826;
+      padding: 16px 0;
+    }
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .logo {
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #f9a826, #ff4d4d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 1px;
+    }
+    .logo span {
+      background: none;
+      color: #f9a826;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: 600;
+    }
+    .nav-links a {
+      color: #f0f3fa;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .nav-links a:hover {
+      color: #f9a826;
+    }
+
+    /* hero section */
+    .hero {
+      background: linear-gradient(125deg, #071126 0%, #01040c 100%);
+      padding: 90px 0 80px;
+      border-bottom: 1px solid #f9a82630;
+    }
+    .hero-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 45px;
+    }
+    .hero-text {
+      flex: 1.2;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #f9a826;
+      color: #0a0a1a;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 {
+      font-size: 3.3rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 .year {
+      color: #f9a826;
+      text-shadow: 0 0 5px #f9a82660;
+    }
+    .hero-text p {
+      font-size: 1.15rem;
+      color: #b9c3e6;
+      max-width: 550px;
+      margin-bottom: 32px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: 0.2s;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: #f9a826;
+      color: #0a0c16;
+      box-shadow: 0 5px 14px rgba(249, 168, 38, 0.3);
+    }
+    .btn-primary:hover {
+      background: #e69500;
+      transform: translateY(-2px);
+    }
+    .btn-outline {
+      border: 1.5px solid #f9a826;
+      color: #fff;
+      background: transparent;
+    }
+    .btn-outline:hover {
+      background: rgba(249, 168, 38, 0.15);
+      transform: translateY(-2px);
+    }
+    .hero-img img {
+      max-width: 100%;
+      width: 480px;
+      filter: drop-shadow(0 20px 25px -8px black);
+      border-radius: 36px;
+    }
+
+    /* section headings */
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 40px;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 70px;
+      height: 4px;
+      background: #f9a826;
+      border-radius: 3px;
+    }
+
+    /* team cards grid */
+    .teams-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin: 50px 0 60px;
+    }
+    .team-card {
+      background: #111622;
+      border-radius: 32px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+      border: 1px solid #232a3a;
+      backdrop-filter: blur(2px);
+    }
+    .team-card:hover {
+      transform: translateY(-8px);
+      border-color: #f9a826;
+      box-shadow: 0 20px 30px -12px rgba(249,168,38,0.25);
+    }
+    .team-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: linear-gradient(145deg, #1e2438, #0a0f1c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0;
+    }
+    .card-content {
+      padding: 24px;
+    }
+    .team-name {
+      font-size: 1.7rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .captain {
+      color: #f9a826;
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+    .team-stats {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #283040;
+      margin-top: 18px;
+      padding-top: 14px;
+      font-size: 0.85rem;
+    }
+
+    /* stats row */
+    .stats-section {
+      background: linear-gradient(110deg, #0e1424, #050810);
+      padding: 70px 0;
+      margin: 40px 0;
+      border-radius: 48px;
+    }
+    .stats-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+      text-align: center;
+    }
+    .stat-card {
+      flex: 1;
+      background: #0f1624cc;
+      backdrop-filter: blur(4px);
+      padding: 28px 12px;
+      border-radius: 32px;
+      border: 1px solid #f9a82630;
+    }
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #f9a826;
+    }
+
+    /* schedule list */
+    .schedule-list {
+      margin: 50px 0 40px;
+    }
+    .match-item {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1f2638;
+      padding: 20px 0;
+      transition: 0.1s;
+    }
+    .match-date {
+      min-width: 100px;
+      font-weight: 600;
+      color: #b9c0dd;
+    }
+    .match-teams {
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex: 2;
+    }
+    .match-venue {
+      color: #a5abcc;
+    }
+
+    /* footer */
+    .footer {
+      background: #03050b;
+      padding: 50px 0 30px;
+      border-top: 1px solid #f9a82630;
+      margin-top: 70px;
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+    .footer-logo {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+    .footer-links {
+      display: flex;
+      gap: 40px;
+    }
+    .footer-links a {
+      color: #a0a8cc;
+      text-decoration: none;
+    }
+    .copyright {
+      margin-top: 45px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6c729b;
+    }
+    @media (max-width: 780px) {
+      .container {
+        padding: 0 20px;
+      }
+      .hero-text h1 {
+        font-size: 2.4rem;
+      }
+      .nav {
+        flex-direction: column;
+      }
+      .stats-grid {
+        flex-direction: column;
+      }
+      .match-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container nav">
+    <div class="logo">IPL<span>2026</span> · TATA</div>
+    <div class="nav-links">
+      <a href="#teams">Teams</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#stats">Records</a>
+      <a href="#gallery">Gallery</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">🏆 18th SEASON · BIGGER & BOLDER</div>
+        <h1>Indian Premier League <span class="year">2026</span><br>Glory. Grit. Gamechangers.</h1>
+        <p>10 powerhouse teams. 74 thrilling matches. New mega auction, tactical rule innovations, and a fresh wave of young superstars. The greatest show in cricket returns.</p>
+        <div class="btn-group">
+          <a href="#teams" class="btn btn-primary">Explore Teams ↓</a>
+          <a href="#schedule" class="btn btn-outline">Full Schedule 2026</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="https://placehold.co/600x400/1f2a3e/f9a826?text=IPL+2026+Trophy+Glory" alt="IPL 2026 Trophy Concept">
+      </div>
+    </div>
+  </section>
+
+  <!-- Teams section with actual team images (fetching from reliable image placeholders, but designed to look like real teams) -->
+  <div class="container" id="teams">
+    <h2 class="section-title">🏏 2026 Franchises · The Contenders</h2>
+    <div class="teams-grid">
+      <!-- Chennai Super Kings -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/FFD700/1a2a3a?text=CSK+Super+Kings" alt="Chennai Super Kings">
+        <div class="card-content">
+          <div class="team-name">Chennai Super Kings</div>
+          <div class="captain">Captain: Ruturaj Gaikwad · Coach: Fleming</div>
+          <p>Yellow Army returns with spin mastery and vintage experience. 5-time champions eye another crown.</p>
+          <div class="team-stats"><span>🏆 Titles: 5</span><span>⭐ Retained: Jadeja, Dhoni</span></div>
+        </div>
+      </div>
+      <!-- Mumbai Indians -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/0055A4/ffffff?text=Mumbai+Indians" alt="Mumbai Indians">
+        <div class="card-content">
+          <div class="team-name">Mumbai Indians</div>
+          <div class="captain">Captain: Hardik Pandya · Coach: Boucher</div>
+          <p>Most successful team with 5 trophies. Explosive batting & lethal pace attack.</p>
+          <div class="team-stats"><span>🏆 Titles: 5</span><span>⚡ Key: Bumrah, Rohit</span></div>
+        </div>
+      </div>
+      <!-- Royal Challengers Bengaluru -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/E31B23/000000?text=RCB+2026" alt="Royal Challengers">
+        <div class="card-content">
+          <div class="team-name">Royal Challengers Bengaluru</div>
+          <div class="captain">Captain: Faf du Plessis · King Kohli special</div>
+          <p>New aggressive era, upgraded bowling unit. Chasing first title.</p>
+          <div class="team-stats"><span>🏆 Finals: 3</span><span>🔥 Virat, Maxwell, Siraj</span></div>
+        </div>
+      </div>
+      <!-- Kolkata Knight Riders -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/3A225C/E5D823?text=KKR+2026" alt="Kolkata Knight Riders">
+        <div class="card-content">
+          <div class="team-name">Kolkata Knight Riders</div>
+          <div class="captain">Captain: Shreyas Iyer · Mentor: Gambhir</div>
+          <p>Two-time champions. All-round depth & mystery spinners.</p>
+          <div class="team-stats"><span>🏆 Titles: 2</span><span>🌪️ Narine, Rana, Starc</span></div>
+        </div>
+      </div>
+      <!-- Rajasthan Royals -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/254AA5/FFC0CB?text=Rajasthan+Royals" alt="Rajasthan Royals">
+        <div class="card-content">
+          <div class="team-name">Rajasthan Royals</div>
+          <div class="captain">Captain: Sanju Samson · Young brigade</div>
+          <p>2008 champions, reinvented with Jaiswal, Buttler & Boult.</p>
+          <div class="team-stats"><span>🏆 1 Title</span><span>🎯 High impact players</span></div>
+        </div>
+      </div>
+      <!-- Sunrisers Hyderabad -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/FF822A/1a1f2c?text=Sunrisers+Hyderabad" alt="Sunrisers Hyderabad">
+        <div class="card-content">
+          <div class="team-name">Sunrisers Hyderabad</div>
+          <div class="captain">Captain: Pat Cummins · Aussie core</div>
+          <p>2024 finalists, now stronger with power-hitting and express pace.</p>
+          <div class="team-stats"><span>🏆 2016 Champs</span><span>🔥 Klassen, Head</span></div>
+        </div>
+      </div>
+      <!-- Delhi Capitals -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/1C298F/fff?text=Delhi+Capitals" alt="Delhi Capitals">
+        <div class="card-content">
+          <div class="team-name">Delhi Capitals</div>
+          <div class="captain">Captain: Rishabh Pant · Dynamic squad</div>
+          <p>Young guns aiming for maiden trophy.</p>
+          <div class="team-stats"><span>🏆 Finals: 2020</span><span>💥 Warner, Axar, Nortje</span></div>
+        </div>
+      </div>
+      <!-- Punjab Kings -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/ED1B24/ffffff?text=Punjab+Kings" alt="Punjab Kings">
+        <div class="card-content">
+          <div class="team-name">Punjab Kings</div>
+          <div class="captain">Captain: Shikhar Dhawan · new look</div>
+          <p>Unpredictable & explosive, aiming for playoff breakthrough.</p>
+          <div class="team-stats"><span>🎯 Livingstone, Rabada</span><span>🔥 Power-hitters</span></div>
+        </div>
+      </div>
+      <!-- Gujarat Titans -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/1B5E20/FFB300?text=Gujarat+Titans" alt="Gujarat Titans">
+        <div class="card-content">
+          <div class="team-name">Gujarat Titans</div>
+          <div class="captain">Captain: Shubman Gill · defending champs</div>
+          <p>2022 & 2025 champions? Consistent and ruthless.</p>
+          <div class="team-stats"><span>🏆 2 Titles</span><span>⭐ Rashid, Miller, Shami</span></div>
+        </div>
+      </div>
+      <!-- Lucknow Super Giants -->
+      <div class="team-card">
+        <img class="team-img" src="https://placehold.co/600x400/51A9DD/0B1930?text=LSG+Super+Giants" alt="Lucknow Super Giants">
+        <div class="card-content">
+          <div class="team-name">Lucknow Super Giants</div>
+          <div class="captain">Captain: KL Rahul · power-packed</div>
+          <p>Explosive top order and crafty spinners. Playoff regulars.</p>
+          <div class="team-stats"><span>🎯 Stoinis, Bishnoi</span><span>🔥 QDK, Mayank</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- stats & records (long professional vibe) -->
+  <div class="container stats-section" id="stats">
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-number">10</div><div>TEAMS</div><small>Full competitive roster</small></div>
+      <div class="stat-card"><div class="stat-number">74</div><div>MATCHES</div><small>Double round-robin + playoffs</small></div>
+      <div class="stat-card"><div class="stat-number">₹120 Cr</div><div>SALARY CAP</div><small>Mega auction 2026</small></div>
+      <div class="stat-card"><div class="stat-number">2.5+B</div><div>GLOBAL FANS</div><small>Most watched T20 league</small></div>
+    </div>
+  </div>
+
+  <!-- Extra team images gallery + Action shots / fetch style from wiki style but placeholders give rich visuals -->
+  <div class="container" id="gallery">
+    <h2 class="section-title">📸 IPL 2026 · Match intensity & iconic moments</h2>
+    <div style="display: flex; flex-wrap: wrap; gap: 22px; justify-content: center; margin: 40px 0 30px;">
+      <img src="https://placehold.co/400x250/FF7700/1e1f2a?text=CSK+Celebration+Yellove" style="border-radius: 24px; width: 100%; max-width: 280px; object-fit: cover; border: 1px solid #f9a82660;">
+      <img src="https://placehold.co/400x250/0044AA/white?text=MI+vs+RCB+Epic+Clash" style="border-radius: 24px; width: 100%; max-width: 280px; object-fit: cover; border: 1px solid #f9a82660;">
+      <img src="https://placehold.co/400x250/2C5F2D/f7f7f7?text=KKR+Purple+Jubilee" style="border-radius: 24px; width: 100%; max-width: 280px; object-fit: cover; border: 1px solid #f9a82660;">
+      <img src="https://placehold.co/400x250/881111/ffffff?text=TATA+IPL+Trophy+2026" style="border-radius: 24px; width: 100%; max-width: 280px; object-fit: cover; border: 1px solid #f9a82660;">
+    </div>
+    <p style="margin-bottom: 30px; font-style: italic; color: #b9c6f0;">⭐ Mega auction preview: Over 500 players in the pool, new impact player rule evolution & strategic timeouts redefined.</p>
+  </div>
+
+  <!-- Schedule: Full 2026 Fixtures long table style -->
+  <div class="container" id="schedule">
+    <h2 class="section-title">📅 IPL 2026 Schedule · Mark your calendar</h2>
+    <div class="schedule-list">
+      <div class="match-item"><span class="match-date">Mar 22, 2026</span><span class="match-teams">🏆 Opening Ceremony + CSK vs RCB</span><span class="match-venue">Chennai, Chepauk</span></div>
+      <div class="match-item"><span class="match-date">Mar 23</span><span class="match-teams">MI vs GT · Mumbai</span><span class="match-venue">Wankhede Stadium</span></div>
+      <div class="match-item"><span class="match-date">Mar 25</span><span class="match-teams">KKR vs SRH · Eden Gardens</span><span class="match-venue">Kolkata</span></div>
+      <div class="match-item"><span class="match-date">Mar 27</span><span class="match-teams">RR vs LSG · Sawai Mansingh</span><span class="match-venue">Jaipur</span></div>
+      <div class="match-item"><span class="match-date">Mar 29</span><span class="match-teams">DC vs PBKS · Delhi</span><span class="match-venue">Arun Jaitley Stadium</span></div>
+      <div class="match-item"><span class="match-date">Apr 02</span><span class="match-teams">RCB vs MI · M. Chinnaswamy</span><span class="match-venue">Bengaluru</span></div>
+      <div class="match-item"><span class="match-date">Apr 05</span><span class="match-teams">GT vs CSK · Narendra Modi Stadium</span><span class="match-venue">Ahmedabad</span></div>
+      <div class="match-item"><span class="match-date">Apr 10</span><span class="match-teams">LSG vs KKR · Ekana Stadium</span><span class="match-venue">Lucknow</span></div>
+      <div class="match-item"><span class="match-date">Apr 18</span><span class="match-teams">SRH vs RR · Uppal</span><span class="match-venue">Hyderabad</span></div>
+      <div class="match-item"><span class="match-date">Apr 25</span><span class="match-teams">PBKS vs DC · Dharamshala</span><span class="match-venue">HPCA Stadium</span></div>
+      <div class="match-item"><span class="match-date">May 05</span><span class="match-teams">Eliminator & Qualifier 1</span><span class="match-venue">Ahmedabad</span></div>
+      <div class="match-item"><span class="match-date">May 12</span><span class="match-teams">Qualifier 2</span><span class="match-venue">Chennai</span></div>
+      <div class="match-item"><span class="match-date">May 19</span><span class="match-teams">🏆 FINAL 2026 · New Champions</span><span class="match-venue">Narendra Modi Stadium</span></div>
+    </div>
+  </div>
+
+  <!-- long professional feature: rule changes & next gen analysis -->
+  <div class="container" style="margin: 70px auto;">
+    <div style="background: #0d1220; border-radius: 44px; padding: 48px 36px; border: 1px solid #2a3145;">
+      <h2 class="section-title" style="margin-bottom: 30px;">⚡ 2026 Innovations & Impact Player 2.0</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 40px;">
+        <div style="flex: 1;">
+          <h3 style="color:#f9a826; margin-bottom: 12px;">🔄 Mega Auction Dynamics</h3>
+          <p>All 10 teams entered the 2026 mega auction with revamped purses: INR 120 crore each. The RTM card made a return, allowing unprecedented squad continuity. New stars like Shubman Gill, Rinku Singh spark bidding wars.</p>
+          <h3 style="color:#f9a826; margin: 28px 0 12px;">📈 Smart Stats & Strategy</h3>
+          <p>New tactical timeout split: 2 min per innings for real-time analytics. Introduction of 'Power Surge' overs (two 5-over blocks with only 3 fielders outside circle).</p>
+        </div>
+        <div style="flex: 1;">
+          <h3 style="color:#f9a826; margin-bottom: 12px;">🏏 Young Indian Core</h3>
+          <p>IPL 2026 sees the rise of uncapped sensations: Yash Dhull, Raj Bawa, and emerging fast bowlers. Franchises focus on domestic talent to build future dynasties.</p>
+          <h3 style="color:#f9a826; margin: 28px 0 12px;">🌏 Global Broadcast</h3>
+          <p>Star Sports & JioCinema to stream in 4K with multi-language feeds. Record viewership expected with 4 new prime-time doubleheaders.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- additional: stats leaders -->
+  <div class="container">
+    <div style="background: linear-gradient(120deg, #101624, #060a14); border-radius: 36px; padding: 40px; margin: 30px 0;">
+      <h3 style="font-size: 1.6rem; margin-bottom: 20px; text-align: center;">🏅 2026 Season Leaderboards (Projected)</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-evenly;">
+        <div><span style="color:#f9a826;">🏏 Most Runs:</span> Virat Kohli (RCB) · 645 runs</div>
+        <div><span style="color:#f9a826;">🎯 Most Wickets:</span> Jasprit Bumrah (MI) · 28 wkts</div>
+        <div><span style="color:#f9a826;">⭐ Highest Score:</span> 128* by Jos Buttler</div>
+        <div><span style="color:#f9a826;">🔥 Most Sixes:</span> Heinrich Klaasen · 42 sixes</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-logo">IPL<span style="color:#f9a826;">2026</span> · TATA</div>
+      <div class="footer-links">
+        <a href="#">Teams & Squads</a>
+        <a href="#">Tickets</a>
+        <a href="#">Fan Code</a>
+        <a href="#">Official BCCI</a>
+      </div>
+    </div>
+    <div class="copyright">
+      © 2026 Indian Premier League — Unofficial fan hub concept. All team logos, stats, and imagery are artistic representations.<br>
+      Built for cricket fanatics worldwide. #IPL2026 #OrangeCap #PurpleCap
+    </div>
+  </div>
+</footer>
+</body>
+</html>

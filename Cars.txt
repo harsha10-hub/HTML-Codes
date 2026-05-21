@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AutoMotive | Global Car Brands & Logos Hub</title>
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f4f6fa;
+            color: #1a2634;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* buttons */
+        .btn-primary {
+            background: #1e3a5f;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-primary:hover {
+            background: #0f2c48;
+            transform: translateY(-2px);
+        }
+
+        /* navbar */
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 0;
+        }
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #1e3a5f, #2c5a7a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo i {
+            color: #1e3a5f;
+            background: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            font-weight: 500;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            transition: 0.2s;
+        }
+        .nav-links a:hover { color: #1e3a5f; }
+
+        /* hero */
+        .hero {
+            background: linear-gradient(107deg, #eef2f7 0%, #ffffff 100%);
+            padding: 50px 0 60px;
+        }
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 45px;
+        }
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .hero-text .highlight {
+            color: #1e3a5f;
+            border-bottom: 3px solid #1e3a5f;
+        }
+        .hero-text p {
+            color: #4a627a;
+            margin: 20px 0 28px;
+            font-size: 1rem;
+        }
+        .stats {
+            display: flex;
+            gap: 35px;
+            margin-top: 20px;
+        }
+        .stat-number {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #1e3a5f;
+        }
+        .hero-img img {
+            max-width: 100%;
+            border-radius: 38px;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+        }
+
+        /* search + filter */
+        .search-panel {
+            background: white;
+            border-radius: 60px;
+            margin-top: -30px;
+            margin-bottom: 40px;
+            padding: 12px 24px;
+            box-shadow: 0 12px 25px rgba(0,0,0,0.05);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 10;
+        }
+        .search-box {
+            flex: 2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 8px 20px;
+            border-radius: 50px;
+        }
+        .search-box i { color: #5c7c9e; }
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 12px 0;
+            width: 100%;
+            font-size: 1rem;
+            outline: none;
+        }
+        .filter-group select, .filter-group button {
+            padding: 10px 20px;
+            border-radius: 40px;
+            border: 1px solid #dce5ef;
+            background: white;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* brands grid */
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 30px 0 12px;
+        }
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minwidth(300px, 1fr));
+            gap: 28px;
+            margin: 40px 0 60px;
+        }
+        .brand-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.25s;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.04);
+            border: 1px solid #e9edf2;
+            cursor: pointer;
+        }
+        .brand-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 28px -12px rgba(0,0,0,0.12);
+            border-color: #bdd4e8;
+        }
+        .car-image {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .brand-logo-overlay {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            padding: 8px;
+        }
+        .brand-logo-overlay img {
+            max-width: 32px;
+            max-height: 32px;
+            object-fit: contain;
+        }
+        .brand-info {
+            padding: 20px;
+            text-align: center;
+        }
+        .brand-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+        }
+        .brand-country {
+            color: #5a6f8c;
+            margin: 6px 0;
+            font-size: 0.85rem;
+        }
+        .brand-cars {
+            font-size: 0.8rem;
+            background: #eef3fc;
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            margin-top: 8px;
+        }
+
+        /* modal for brand details */
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content {
+            background: white;
+            max-width: 580px;
+            width: 90%;
+            border-radius: 48px;
+            padding: 28px;
+            position: relative;
+            text-align: center;
+        }
+        .modal-car-img {
+            width: 100%;
+            height: 200px;
+            border-radius: 28px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 16px;
+        }
+        .modal-logo {
+            width: 80px;
+            margin: 0 auto 12px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
+        footer {
+            background: #0f1a24;
+            color: #bcd0e0;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+        @media (max-width: 720px) {
+            .container { padding: 0 20px; }
+            .hero-text h1 { font-size: 2.2rem; }
+            .search-panel { flex-direction: column; align-items: stretch; border-radius: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Modal Brand Detail -->
+<div class="modal" id="brandModal">
+    <div class="modal-content">
+        <i class="fas fa-times close-modal" id="closeModalBtn"></i>
+        <div class="modal-car-img" id="modalCarImage"></div>
+        <div class="modal-logo" id="modalLogo"></div>
+        <h2 id="modalBrandName">Brand Name</h2>
+        <p id="modalCountry"><i class="fas fa-globe"></i> Country</p>
+        <p id="modalFounded">Founded: Year</p>
+        <p id="modalDesc" style="margin: 16px 0;">Detailed description of the brand, iconic models, and legacy.</p>
+        <button class="btn-primary" id="modalExploreBtn">Explore Models <i class="fas fa-arrow-right"></i></button>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container nav-flex">
+        <div class="logo"><i class="fas fa-car"></i> AutoMotive</div>
+        <div class="nav-links">
+            <a href="#">Brands</a>
+            <a href="#" id="galleryLink">Collection</a>
+            <a href="#">Classics</a>
+            <a href="#" id="showroomLink"><i class="fas fa-map-marker-alt"></i> Showrooms</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-text">
+            <h1>Discover <span class="highlight">75+ iconic car brands</span> worldwide</h1>
+            <p>From Italian elegance to German engineering and American muscle — explore logos, heritage, and legendary models with stunning car visuals.</p>
+            <div class="stats">
+                <div><span class="stat-number">75+</span><br>Car Brands</div>
+                <div><span class="stat-number">25+</span><br>Countries</div>
+                <div><span class="stat-number">500+</span><br>Iconic Models</div>
+            </div>
+            <button class="btn-primary" id="exploreBrandsBtn"><i class="fas fa-arrow-down"></i> Explore Brands</button>
+        </div>
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=600&auto=format" alt="luxury car lineup">
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Search + filter -->
+    <div class="search-panel">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchBrand" placeholder="Search by brand name (e.g., Ferrari, Toyota, BMW)...">
+        </div>
+        <div class="filter-group">
+            <select id="countryFilter">
+                <option value="all">All Countries</option>
+                <option value="Germany">Germany</option>
+                <option value="Italy">Italy</option>
+                <option value="Japan">Japan</option>
+                <option value="USA">USA</option>
+                <option value="UK">United Kingdom</option>
+                <option value="France">France</option>
+                <option value="South Korea">South Korea</option>
+                <option value="Sweden">Sweden</option>
+            </select>
+            <button id="resetFiltersBtn"><i class="fas fa-undo-alt"></i> Reset</button>
+        </div>
+    </div>
+
+    <h2 class="section-title">🏭 All Automotive Brands</h2>
+    <div class="brands-grid" id="brandsGrid"></div>
+</div>
+
+<footer>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px;">
+            <div><i class="fas fa-car-side"></i> AutoMotive — Global Brand Directory</div>
+            <div><i class="fas fa-envelope"></i> info@automotivehub.com</div>
+            <div><i class="fab fa-instagram"></i>  <i class="fab fa-twitter"></i>  @automotive_world</div>
+        </div>
+        <hr style="margin: 24px 0; border-color:#2c3e50;">
+        <p style="text-align:center; font-size:0.8rem;">© 2025 AutoMotive | For educational & practice purposes only. All trademarks and logos belong to respective owners.</p>
+    </div>
+</footer>
+
+<script>
+    // ---------- COMPREHENSIVE CAR BRANDS DATABASE (logos + car images) ----------
+    // High-quality car images (dummy/Unsplash) for each brand to make it visually rich
+    const carBrands = [
+        { id: 1, name: "Toyota", country: "Japan", founded: 1937, description: "World's largest automaker, known for reliability, hybrid tech (Prius), and legendary Land Cruiser.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Toyota_carlogo.svg/200px-Toyota_carlogo.svg.png", models: "Camry, Corolla, Hilux", carImage: "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500&auto=format" },
+        { id: 2, name: "Volkswagen", country: "Germany", founded: 1937, description: "Famous for the Beetle, Golf, and leading the ID electric lineup.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Volkswagen_logo_2019.svg/200px-Volkswagen_logo_2019.svg.png", models: "Golf, Passat, ID.4", carImage: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=500&auto=format" },
+        { id: 3, name: "BMW", country: "Germany", founded: 1916, description: "Bavarian luxury performance brand, 'Ultimate Driving Machine'.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/200px-BMW.svg.png", models: "3 Series, X5, i8", carImage: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=500&auto=format" },
+        { id: 4, name: "Mercedes-Benz", country: "Germany", founded: 1926, description: "Pioneer of luxury automobiles and safety innovations.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Mercedes-Logo.svg/200px-Mercedes-Logo.svg.png", models: "S-Class, G-Wagon, EQS", carImage: "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?w=500&auto=format" },
+        { id: 5, name: "Ferrari", country: "Italy", founded: 1947, description: "Prancing horse symbol of speed, Formula 1 dominance.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Ferrari-Logo.svg/200px-Ferrari-Logo.svg.png", models: "488 GTB, SF90 Stradale", carImage: "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=500&auto=format" },
+        { id: 6, name: "Lamborghini", country: "Italy", founded: 1963, description: "Daring supercars, known for V12 engines and sharp design.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Lamborghini_Logo.svg/200px-Lamborghini_Logo.svg.png", models: "Aventador, Huracán, Urus", carImage: "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=500&auto=format" },
+        { id: 7, name: "Ford", country: "USA", founded: 1903, description: "American icon, Mustang muscle, F-150 tough trucks.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Ford_logo_flat.svg/200px-Ford_logo_flat.svg.png", models: "Mustang, F-150, Explorer", carImage: "https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?w=500&auto=format" },
+        { id: 8, name: "Chevrolet", country: "USA", founded: 1911, description: "Bowtie brand, Corvette sports cars and Silverado pickups.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Chevrolet_logo.svg/200px-Chevrolet_logo.svg.png", models: "Corvette, Camaro, Tahoe", carImage: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=500&auto=format" },
+        { id: 9, name: "Honda", country: "Japan", founded: 1948, description: "Engine master, Civic, Accord and NSX supercar.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Honda_logo.svg/200px-Honda_logo.svg.png", models: "Civic, CR-V, NSX", carImage: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=500&auto=format" },
+        { id: 10, name: "Tesla", country: "USA", founded: 2003, description: "Electric vehicle pioneer, autonomous driving tech.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Tesla_Motors.svg/200px-Tesla_Motors.svg.png", models: "Model 3, Model S, Cybertruck", carImage: "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=500&auto=format" },
+        { id: 11, name: "Porsche", country: "Germany", founded: 1931, description: "Legendary 911, sportscar heritage and Taycan EV.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Porsche_logo.svg/200px-Porsche_logo.svg.png", models: "911, Cayenne, Taycan", carImage: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=500&auto=format" },
+        { id: 12, name: "Audi", country: "Germany", founded: 1909, description: "Quattro all-wheel drive, luxury performance.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Audi_logo_detail.svg/200px-Audi_logo_detail.svg.png", models: "A4, Q5, e-tron GT", carImage: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=500&auto=format" },
+        { id: 13, name: "Hyundai", country: "South Korea", founded: 1967, description: "Innovative design, Ioniq electric lineup.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Hyundai_Motor_Company_logo.svg/200px-Hyundai_Motor_Company_logo.svg.png", models: "Tucson, Santa Fe, Ioniq 5", carImage: "https://images.unsplash.com/photo-1631784192064-8af5a6e9501b?w=500&auto=format" },
+        { id: 14, name: "Kia", country: "South Korea", founded: 1944, description: "Value-packed cars with bold design, EV6 award winner.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Kia_Motors_logo.svg/200px-Kia_Motors_logo.svg.png", models: "Telluride, Sportage, EV6", carImage: "https://images.unsplash.com/photo-1631993420664-14b4eab2d1b7?w=500&auto=format" },
+        { id: 15, name: "Volvo", country: "Sweden", founded: 1927, description: "Safety leader, Scandinavian luxury, electrification.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Volvo_Logo.svg/200px-Volvo_Logo.svg.png", models: "XC90, S60, EX90", carImage: "https://images.unsplash.com/photo-1600861195091-690c92f1d2cc?w=500&auto=format" },
+        { id: 16, name: "Jaguar", country: "UK", founded: 1922, description: "British luxury, leaping cat emblem, sport sedans.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Jaguar_logo_2012.svg/200px-Jaguar_logo_2012.svg.png", models: "F-Type, XF, I-Pace", carImage: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?w=500&auto=format" },
+        { id: 17, name: "Land Rover", country: "UK", founded: 1948, description: "Luxury SUVs, legendary off-road capability.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Land_Rover_logo.svg/200px-Land_Rover_logo.svg.png", models: "Range Rover, Defender, Discovery", carImage: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=500&auto=format" },
+        { id: 18, name: "Mazda", country: "Japan", founded: 1920, description: "Kodo design, rotary engine history, fun to drive.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Mazda_logo.svg/200px-Mazda_logo.svg.png", models: "MX-5 Miata, CX-5, Mazda3", carImage: "https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?w=500&auto=format" },
+        { id: 19, name: "Nissan", country: "Japan", founded: 1933, description: "GT-R legend, Leaf electric pioneer.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Nissan_logo.png/200px-Nissan_logo.png", models: "GT-R, Altima, Leaf", carImage: "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500&auto=format" },
+        { id: 20, name: "Renault", country: "France", founded: 1899, description: "French flair, electric Zoe and Megane E-Tech.", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Renault_2019_logo.png/200px-Renault_2019_logo.png", models: "Clio, Megane, Captur", carImage: "https://images.unsplash.com/photo-1600861195091-690c92f1d2cc?w=500&auto=format" }
+    ];
+
+    let currentCountryFilter = "all";
+    let currentSearch = "";
+
+    function renderBrands() {
+        let filtered = carBrands.filter(brand => {
+            const matchCountry = currentCountryFilter === "all" || brand.country === currentCountryFilter;
+            const matchSearch = brand.name.toLowerCase().includes(currentSearch.toLowerCase());
+            return matchCountry && matchSearch;
+        });
+        const grid = document.getElementById("brandsGrid");
+        if (filtered.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px;"><i class="fas fa-car-crash"></i> No brands found. Try different filter.</div>`;
+            return;
+        }
+        grid.innerHTML = filtered.map(brand => `
+            <div class="brand-card" data-id="${brand.id}">
+                <div class="car-image" style="background-image: url('${brand.carImage}');">
+                    <div class="brand-logo-overlay">
+                        <img src="${brand.logo}" alt="${brand.name} logo" onerror="this.src='https://via.placeholder.com/48?text=Logo'">
+                    </div>
+                </div>
+                <div class="brand-info">
+                    <div class="brand-name">${brand.name}</div>
+                    <div class="brand-country"><i class="fas fa-flag-checkered"></i> ${brand.country}</div>
+                    <div class="brand-cars">🏎️ ${brand.models.split(',')[0]} ...</div>
+                </div>
+            </div>
+        `).join('');
+        // attach click events for modal
+        document.querySelectorAll('.brand-card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                const id = parseInt(card.dataset.id);
+                const brand = carBrands.find(b => b.id === id);
+                if(brand) openBrandModal(brand);
+            });
+        });
+    }
+
+    // Modal logic with car image
+    function openBrandModal(brand) {
+        document.getElementById("modalBrandName").innerText = brand.name;
+        document.getElementById("modalCountry").innerHTML = `<i class="fas fa-globe"></i> ${brand.country}`;
+        document.getElementById("modalFounded").innerHTML = `Founded: ${brand.founded}`;
+        document.getElementById("modalDesc").innerHTML = brand.description;
+        
+        // Set modal car image
+        const modalCarDiv = document.getElementById("modalCarImage");
+        modalCarDiv.style.backgroundImage = `url('${brand.carImage}')`;
+        modalCarDiv.style.backgroundSize = "cover";
+        modalCarDiv.style.backgroundPosition = "center";
+        
+        const modalLogoDiv = document.getElementById("modalLogo");
+        modalLogoDiv.innerHTML = `<img src="${brand.logo}" alt="${brand.name}" style="max-width:80px;" onerror="this.src='https://via.placeholder.com/80?text=Logo'">`;
+        
+        document.getElementById("modalExploreBtn").onclick = () => {
+            alert(`🚗 Explore ${brand.name} models: ${brand.models}. Visit official website for more details.`);
+        };
+        document.getElementById("brandModal").classList.add("active");
+    }
+    
+    function closeModal() { 
+        document.getElementById("brandModal").classList.remove("active"); 
+    }
+
+    // filter events
+    document.getElementById("searchBrand").addEventListener("input", (e) => {
+        currentSearch = e.target.value;
+        renderBrands();
+    });
+    document.getElementById("countryFilter").addEventListener("change", (e) => {
+        currentCountryFilter = e.target.value;
+        renderBrands();
+    });
+    document.getElementById("resetFiltersBtn").addEventListener("click", () => {
+        document.getElementById("searchBrand").value = "";
+        document.getElementById("countryFilter").value = "all";
+        currentSearch = "";
+        currentCountryFilter = "all";
+        renderBrands();
+    });
+    document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+    const modalElem = document.getElementById("brandModal");
+    modalElem.addEventListener("click", (e) => { if(e.target === modalElem) closeModal(); });
+    document.getElementById("exploreBrandsBtn").addEventListener("click", () => {
+        document.querySelector(".brands-grid").scrollIntoView({ behavior: "smooth" });
+    });
+    document.getElementById("galleryLink")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("🚘 Virtual showroom: Explore stunning car galleries — This is a demo practice project.");
+    });
+    document.getElementById("showroomLink")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        alert("📍 Nearest AutoMotive showroom: Downtown City Center — coming soon for test drives!");
+    });
+
+    // initial load
+    renderBrands();
+</script>
+</body>
+</html>

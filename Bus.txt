@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>YatriExpress | India Bus Booking</title>
+    <!-- Google Fonts + Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f7fc;
+            color: #1e2a3e;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        /* buttons */
+        .btn-primary {
+            background: #e05a2a;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        .btn-primary:hover {
+            background: #c24518;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(224,90,42,0.25);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #e05a2a;
+            border-radius: 40px;
+            padding: 8px 20px;
+            color: #e05a2a;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-outline:hover {
+            background: rgba(224,90,42,0.08);
+        }
+
+        /* navbar */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 0;
+        }
+        .nav-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #e05a2a, #b13b10);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo i {
+            color: #e05a2a;
+            background: none;
+            -webkit-background-clip: unset;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            font-weight: 500;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            transition: 0.2s;
+        }
+        .nav-links a:hover { color: #e05a2a; }
+
+        /* hero section */
+        .hero {
+            background: linear-gradient(107deg, #fff5ef 0%, #ffe8de 100%);
+            padding: 50px 0 60px;
+        }
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .hero-text span {
+            color: #e05a2a;
+        }
+        .hero-text p {
+            color: #4a5b6e;
+            margin: 20px 0 28px;
+            font-size: 1.05rem;
+        }
+        .hero-img img {
+            max-width: 100%;
+            border-radius: 38px;
+            box-shadow: 0 20px 28px -12px rgba(0,0,0,0.12);
+        }
+
+        /* search panel */
+        .search-card {
+            background: white;
+            border-radius: 48px;
+            margin-top: -35px;
+            margin-bottom: 48px;
+            padding: 24px 32px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.08);
+            position: relative;
+            z-index: 10;
+            border: 1px solid #ffe0d4;
+        }
+        .search-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+        .input-group {
+            flex: 1;
+            min-width: 160px;
+        }
+        .input-group label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: block;
+            margin-bottom: 6px;
+            color: #5f6c7a;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 48px;
+            border: 1.5px solid #e2e8f0;
+            font-family: inherit;
+            background: white;
+            transition: 0.2s;
+        }
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: #e05a2a;
+        }
+        .search-btn {
+            background: #e05a2a;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 48px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* filter + results header */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 20px 0 20px;
+        }
+        .bus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 28px;
+            margin: 20px 0 50px;
+        }
+        .bus-card {
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.25s;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f0;
+        }
+        .bus-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 28px -12px rgba(0,0,0,0.12);
+            border-color: #ffcfbb;
+        }
+        .bus-img {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .bus-type {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #e05a2a;
+            color: white;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+        .bus-info {
+            padding: 18px;
+        }
+        .route {
+            font-weight: 800;
+            font-size: 1.1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        .time-details {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+            color: #4a5b6e;
+            font-size: 0.9rem;
+        }
+        .price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #e05a2a;
+        }
+        .seat-left {
+            font-size: 0.8rem;
+            background: #eef2ff;
+            padding: 4px 12px;
+            border-radius: 30px;
+        }
+        .select-btn {
+            width: 100%;
+            margin-top: 16px;
+            background: #fef3ef;
+            border: none;
+            padding: 12px;
+            border-radius: 40px;
+            font-weight: 700;
+            color: #e05a2a;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .select-btn:hover {
+            background: #e05a2a;
+            color: white;
+        }
+
+        /* seat selector modal */
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-content {
+            background: white;
+            max-width: 550px;
+            width: 90%;
+            border-radius: 48px;
+            padding: 28px;
+            position: relative;
+        }
+        .seat-map {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin: 25px 0;
+        }
+        .seat {
+            background: #eef2fa;
+            text-align: center;
+            padding: 10px;
+            border-radius: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .seat.available:hover { background: #fed7c5; }
+        .seat.selected { background: #e05a2a; color: white; }
+        .seat.booked { background: #ccc; cursor: not-allowed; opacity: 0.5; }
+        .close-modal {
+            position: absolute;
+            top: 20px; right: 24px;
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+        footer {
+            background: #1a262f;
+            color: #bfcfdd;
+            padding: 40px 0 24px;
+            margin-top: 40px;
+        }
+        @media (max-width: 720px) {
+            .container { padding: 0 20px; }
+            .hero-text h1 { font-size: 2.2rem; }
+            .search-row { flex-direction: column; align-items: stretch; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Modal Seat Selection -->
+<div class="modal" id="seatModal">
+    <div class="modal-content">
+        <i class="fas fa-times close-modal" id="closeModalBtn"></i>
+        <h3 id="modalBusTitle">Select Seats</h3>
+        <p style="color:#e05a2a; margin-top: 6px;">Ladies & Gents seats available</p>
+        <div class="seat-map" id="seatMapGrid"></div>
+        <div class="booking-summary" style="background:#f8fafc; padding: 16px; border-radius: 24px;">
+            <div><strong>Selected:</strong> <span id="selectedSeatsLabel">None</span></div>
+            <div><strong>Total fare:</strong> ₹<span id="totalFareSpan">0</span></div>
+            <button class="btn-primary" id="confirmBookingBtn" style="width:100%; margin-top: 18px;">Confirm Booking</button>
+        </div>
+    </div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="container nav-flex">
+        <div class="logo"><i class="fas fa-bus-alt"></i> YatriExpress</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#" id="myTripsBtn"><i class="fas fa-ticket-alt"></i> My Trips</a>
+            <a href="#offers">Offers</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container hero-grid">
+        <div class="hero-text">
+            <h1>India's most trusted <span>bus booking</span> platform</h1>
+            <p>Travel across 35+ cities — Delhi, Mumbai, Bangalore, Chennai, Jaipur & more. AC, Sleeper, Volvo available.</p>
+            <button class="btn-primary" id="scrollSearchBtn"><i class="fas fa-arrow-down"></i> Book Now</button>
+        </div>
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&auto=format" alt="Indian bus travel">
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <!-- Search Card -->
+    <div class="search-card" id="searchSection">
+        <div class="search-row">
+            <div class="input-group">
+                <label><i class="fas fa-map-marker-alt"></i> From</label>
+                <input type="text" id="fromCity" placeholder="e.g., Delhi" value="Delhi">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-location-dot"></i> To</label>
+                <input type="text" id="toCity" placeholder="e.g., Jaipur" value="Jaipur">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-calendar"></i> Journey Date</label>
+                <input type="date" id="travelDate" value="2026-05-25">
+            </div>
+            <div class="input-group">
+                <button class="search-btn" id="searchBusesBtn"><i class="fas fa-search"></i> Search Buses</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="results-header">
+        <h2><i class="fas fa-bus"></i> Available Buses <span id="resultCountSpan">(0)</span></h2>
+        <select id="sortSelect" style="padding: 8px 18px; border-radius: 40px; border:1px solid #ddd;">
+            <option value="price">Sort by: Price (low to high)</option>
+            <option value="departure">Sort by: Departure time</option>
+        </select>
+    </div>
+    <div class="bus-grid" id="busGrid"></div>
+</div>
+
+<footer>
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 24px;">
+            <div><i class="fas fa-bus"></i> YatriExpress — Safe & on-time</div>
+            <div><i class="fas fa-headset"></i> 24/7 Support: +91 95400 11234</div>
+            <div><i class="fab fa-instagram"></i>  <i class="fab fa-facebook"></i>  @yatrieasy</div>
+        </div>
+        <hr style="margin: 28px 0 16px; border-color:#2f404d;">
+        <p style="text-align:center; font-size:0.8rem;">© 2025 YatriExpress | India's premier bus booking network</p>
+    </div>
+</footer>
+
+<script>
+    // ---------- BUS DATABASE (Indian routes) ----------
+    const busesData = [
+        { id: 1, name: "Shatabdi Express", from: "Delhi", to: "Jaipur", departure: "06:00 AM", arrival: "11:30 AM", duration: "5h 30m", price: 650, type: "AC Volvo", seatsTotal: 40, bookedSeats: ["A1","A2","B4"], img: "https://images.unsplash.com/photo-1570125909232-263b66f7b3f2?w=500&auto=format" },
+        { id: 2, name: "Rajdhani Sleeper", from: "Mumbai", to: "Goa", departure: "10:30 PM", arrival: "07:45 AM", duration: "9h 15m", price: 1299, type: "Sleeper AC", seatsTotal: 36, bookedSeats: ["C2","C5"], img: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&auto=format" },
+        { id: 3, name: "Orange Travels", from: "Bangalore", to: "Chennai", departure: "08:15 AM", arrival: "02:45 PM", duration: "6h 30m", price: 750, type: "Luxury Seater", seatsTotal: 42, bookedSeats: ["D1","D3"], img: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=500&auto=format" },
+        { id: 4, name: "VRL Superfast", from: "Delhi", to: "Chandigarh", departure: "07:00 AM", arrival: "11:00 AM", duration: "4h", price: 520, type: "AC Seater", seatsTotal: 38, bookedSeats: ["B2"], img: "https://images.unsplash.com/photo-1566843987140-23f9cd6b0576?w=500&auto=format" },
+        { id: 5, name: "Sea Bird Express", from: "Mumbai", to: "Pune", departure: "09:00 AM", arrival: "12:30 PM", duration: "3h 30m", price: 380, type: "Non-AC", seatsTotal: 45, bookedSeats: ["E1","E2"], img: "https://images.unsplash.com/photo-1562663474-6cbb3eaa4d8f?w=500&auto=format" },
+        { id: 6, name: "Palar Transport", from: "Chennai", to: "Bangalore", departure: "11:45 PM", arrival: "05:15 AM", duration: "5h 30m", price: 890, type: "Sleeper", seatsTotal: 32, bookedSeats: ["F4"], img: "https://images.unsplash.com/photo-1513094735237-8f2714d57c13?w=500&auto=format" },
+        { id: 7, name: "Golden Temple Express", from: "Delhi", to: "Amritsar", departure: "07:30 AM", arrival: "01:00 PM", duration: "5h 30m", price: 680, type: "Volvo AC", seatsTotal: 40, bookedSeats: ["G1","G2","G5"], img: "https://images.unsplash.com/photo-1620652638696-1c240c073f2e?w=500&auto=format" },
+        { id: 8, name: "Jaipur Maharaja", from: "Jaipur", to: "Udaipur", departure: "06:15 AM", arrival: "12:30 PM", duration: "6h 15m", price: 720, type: "Luxury AC", seatsTotal: 35, bookedSeats: ["H3"], img: "https://images.unsplash.com/photo-1568138692325-00fb2237c1b8?w=500&auto=format" }
+    ];
+
+    // State
+    let currentFrom = "Delhi";
+    let currentTo = "Jaipur";
+    let filteredBuses = [];
+    let currentSelectedBus = null;    // bus object for modal
+    let selectedSeatsArray = [];
+    let userBookings = JSON.parse(localStorage.getItem("yatri_bookings")) || []; // store bookings
+
+    // Helper: generate seat labels (A1..J8 dynamic per bus)
+    function generateSeatLabels(bus) {
+        const total = bus.seatsTotal;
+        let letters = ["A","B","C","D","E","F","G","H","I","J"];
+        let seats = [];
+        let count = 1;
+        for(let i=0; i<letters.length && seats.length < total; i++) {
+            for(let s=1; s<=6; s++) {
+                if(seats.length >= total) break;
+                seats.push(`${letters[i]}${s}`);
+            }
+        }
+        return seats.slice(0, total);
+    }
+
+    // render bus list based on from/to and sorting
+    function filterAndRenderBuses() {
+        let filtered = busesData.filter(bus => bus.from === currentFrom && bus.to === currentTo);
+        filteredBuses = filtered;
+        const sortBy = document.getElementById("sortSelect").value;
+        if (sortBy === "price") filteredBuses.sort((a,b) => a.price - b.price);
+        if (sortBy === "departure") filteredBuses.sort((a,b) => a.departure.localeCompare(b.departure));
+        
+        const grid = document.getElementById("busGrid");
+        document.getElementById("resultCountSpan").innerText = filteredBuses.length;
+        if (filteredBuses.length === 0) {
+            grid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:50px;">🚍 No buses found from ${currentFrom} to ${currentTo}. Try different route.</div>`;
+            return;
+        }
+        grid.innerHTML = filteredBuses.map(bus => {
+            const availableSeats = bus.seatsTotal - bus.bookedSeats.length;
+            return `
+            <div class="bus-card" data-id="${bus.id}">
+                <div class="bus-img" style="background-image: url('${bus.img}');">
+                    <div class="bus-type">${bus.type}</div>
+                </div>
+                <div class="bus-info">
+                    <div class="route">${bus.name} <span class="price">₹${bus.price}</span></div>
+                    <div class="time-details">
+                        <span><i class="far fa-clock"></i> ${bus.departure}</span>
+                        <span>→</span>
+                        <span>${bus.arrival}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items:center;">
+                        <span>⏱️ ${bus.duration}</span>
+                        <span class="seat-left"><i class="fas fa-chair"></i> ${availableSeats} seats left</span>
+                    </div>
+                    <button class="select-btn" data-id="${bus.id}">Select Seats <i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>`;
+        }).join('');
+
+        document.querySelectorAll('.select-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                const bus = filteredBuses.find(b => b.id === id);
+                if (bus) openSeatModal(bus);
+            });
+        });
+    }
+
+    // Open seat selection modal
+    function openSeatModal(bus) {
+        currentSelectedBus = bus;
+        selectedSeatsArray = [];
+        const modalTitle = document.getElementById("modalBusTitle");
+        modalTitle.innerText = `${bus.name} (${bus.from} → ${bus.to})`;
+        renderSeatMap(bus);
+        updateSeatModalSummary();
+        document.getElementById("seatModal").classList.add("active");
+    }
+
+    function renderSeatMap(bus) {
+        const allSeats = generateSeatLabels(bus);
+        const booked = bus.bookedSeats || [];
+        const seatContainer = document.getElementById("seatMapGrid");
+        seatContainer.innerHTML = "";
+        allSeats.forEach(seat => {
+            const isBooked = booked.includes(seat);
+            const isSelected = selectedSeatsArray.includes(seat);
+            const seatDiv = document.createElement("div");
+            seatDiv.classList.add("seat");
+            if (isBooked) seatDiv.classList.add("booked");
+            if (isSelected) seatDiv.classList.add("selected");
+            seatDiv.innerText = seat;
+            if (!isBooked) {
+                seatDiv.classList.add("available");
+                seatDiv.addEventListener("click", () => {
+                    if (selectedSeatsArray.includes(seat)) {
+                        selectedSeatsArray = selectedSeatsArray.filter(s => s !== seat);
+                    } else {
+                        selectedSeatsArray.push(seat);
+                    }
+                    renderSeatMap(bus);
+                    updateSeatModalSummary();
+                });
+            }
+            seatContainer.appendChild(seatDiv);
+        });
+    }
+
+    function updateSeatModalSummary() {
+        const count = selectedSeatsArray.length;
+        const total = count * currentSelectedBus.price;
+        document.getElementById("selectedSeatsLabel").innerText = count ? selectedSeatsArray.join(", ") : "None";
+        document.getElementById("totalFareSpan").innerText = total;
+    }
+
+    function confirmBusBooking() {
+        if (!currentSelectedBus) return;
+        if (selectedSeatsArray.length === 0) {
+            alert("Please select at least one seat.");
+            return;
+        }
+        // check double booking conflict
+        const conflict = selectedSeatsArray.some(seat => currentSelectedBus.bookedSeats.includes(seat));
+        if (conflict) {
+            alert("One or more selected seats just got booked. Please reselect.");
+            openSeatModal(currentSelectedBus);
+            return;
+        }
+        // create booking record
+        const bookingRecord = {
+            id: Date.now(),
+            busId: currentSelectedBus.id,
+            busName: currentSelectedBus.name,
+            from: currentSelectedBus.from,
+            to: currentSelectedBus.to,
+            date: document.getElementById("travelDate").value || "2026-05-25",
+            seats: [...selectedSeatsArray],
+            totalPrice: selectedSeatsArray.length * currentSelectedBus.price,
+            bookedOn: new Date().toLocaleString()
+        };
+        userBookings.push(bookingRecord);
+        localStorage.setItem("yatri_bookings", JSON.stringify(userBookings));
+
+        // update current bus booked seats (persist)
+        currentSelectedBus.bookedSeats.push(...selectedSeatsArray);
+        // also update in original busesData reference
+        const index = busesData.findIndex(b => b.id === currentSelectedBus.id);
+        if (index !== -1) busesData[index].bookedSeats = currentSelectedBus.bookedSeats;
+        // store updated bus seat data to localStorage for future sessions
+        localStorage.setItem("yatri_buses_state", JSON.stringify(busesData.map(b => ({ id: b.id, bookedSeats: b.bookedSeats }))));
+
+        alert(`✅ Booking confirmed!\nBus: ${currentSelectedBus.name}\nSeats: ${selectedSeatsArray.join(", ")}\nTotal: ₹${selectedSeatsArray.length * currentSelectedBus.price}\nJourney: ${currentSelectedBus.from} → ${currentSelectedBus.to} on ${bookingRecord.date}`);
+        
+        closeModalAndRefresh();
+    }
+
+    function closeModalAndRefresh() {
+        document.getElementById("seatModal").classList.remove("active");
+        currentSelectedBus = null;
+        selectedSeatsArray = [];
+        filterAndRenderBuses();  // refresh bus list (seat availability updated)
+    }
+
+    // My bookings panel (show user bookings)
+    function showMyTrips() {
+        if (userBookings.length === 0) {
+            alert("🚌 No bookings yet. Search and book your first bus trip!");
+            return;
+        }
+        let msg = "🎫 YOUR BOOKED TRIPS:\n\n";
+        userBookings.forEach((b, idx) => {
+            msg += `${idx+1}. ${b.busName} | ${b.from} → ${b.to}\n   Seats: ${b.seats.join(", ")} | ₹${b.totalPrice} | Date: ${b.date}\n`;
+        });
+        alert(msg);
+    }
+
+    // Load persisted booked seats from localStorage
+    function loadPersistedSeats() {
+        const savedState = localStorage.getItem("yatri_buses_state");
+        if (savedState) {
+            const state = JSON.parse(savedState);
+            state.forEach(updated => {
+                const bus = busesData.find(b => b.id === updated.id);
+                if (bus) bus.bookedSeats = updated.bookedSeats;
+            });
+        }
+        const storedBookings = localStorage.getItem("yatri_bookings");
+        if (storedBookings) userBookings = JSON.parse(storedBookings);
+    }
+
+    // Search event handlers
+    document.getElementById("searchBusesBtn").addEventListener("click", () => {
+        currentFrom = document.getElementById("fromCity").value.trim();
+        currentTo = document.getElementById("toCity").value.trim();
+        if (!currentFrom || !currentTo) {
+            alert("Please enter both source and destination cities.");
+            return;
+        }
+        filterAndRenderBuses();
+    });
+    document.getElementById("sortSelect").addEventListener("change", () => filterAndRenderBuses());
+    document.getElementById("scrollSearchBtn").addEventListener("click", () => {
+        document.getElementById("searchSection").scrollIntoView({ behavior: "smooth" });
+    });
+    document.getElementById("myTripsBtn").addEventListener("click", showMyTrips);
+    document.getElementById("confirmBookingBtn").addEventListener("click", confirmBusBooking);
+    document.getElementById("closeModalBtn").addEventListener("click", () => {
+        document.getElementById("seatModal").classList.remove("active");
+    });
+    document.getElementById("seatModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("seatModal")) document.getElementById("seatModal").classList.remove("active");
+    });
+
+    // initial load & default search
+    loadPersistedSeats();
+    currentFrom = "Delhi";
+    currentTo = "Jaipur";
+    document.getElementById("fromCity").value = "Delhi";
+    document.getElementById("toCity").value = "Jaipur";
+    filterAndRenderBuses();
+</script>
+</body>
+</html>
